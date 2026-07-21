@@ -9,21 +9,19 @@
  <style>
  *{margin:0;padding:0;box-sizing:border-box}
  body{font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;background:#f5f6fa;color:#1a1a2e;overflow:hidden;height:100vh;width:100vw;-webkit-font-smoothing:antialiased}
- :root{--primary:#004098;--primary-light:#e8eef8;--primary-dark:#002f73;--accent:#e8a838;--accent-light:#fef6e8;--bg:#f5f6fa;--card:#fff;--text:#1a1a2e;--dim:#6b7280;--border:#e5e7eb;--shadow:0 4px 24px rgba(0,0,0,.06);--shadow-lg:0 8px 40px rgba(0,0,0,.08);--radius:16px}
+ :root{--primary:#004098;--primary-light:#e8eef8;--accent:#e8a838;--accent-light:#fef6e8;--bg:#f5f6fa;--card:#fff;--text:#1a1a2e;--dim:#6b7280;--border:#e5e7eb;--shadow:0 4px 24px rgba(0,0,0,.06);--shadow-lg:0 8px 40px rgba(0,0,0,.08);--radius:16px}
  
  /* ===== Login ===== */
  #loginScreen{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:#f5f6fa;overflow-y:auto;padding:24px}
  .login-container{width:420px;max-width:100%;padding:52px 40px;text-align:center;background:#fff;border-radius:24px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;animation:fadeIn .5s ease}
  .login-container::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary),var(--accent),var(--primary))}
  @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
- @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
- @keyframes scaleIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
- @keyframes spin{to{transform:rotate(360deg)}}
+ @keyframes slideDown{from{transform:translateY(-100%)}to{transform:translateY(0)}}
+ @keyframes slideRight{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
  .login-icon{width:72px;height:72px;margin:0 auto 20px;background:linear-gradient(135deg,var(--primary),#1a5cb5);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:32px;color:#fff;box-shadow:0 8px 24px rgba(0,64,152,.25)}
  .login-badge{display:inline-block;padding:4px 14px;border-radius:50px;background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:600;letter-spacing:2px;margin-bottom:12px}
  .login-title{font-size:26px;font-weight:900;color:var(--text);margin-bottom:4px;letter-spacing:3px}
  .login-sub{font-size:14px;color:var(--dim);margin-bottom:32px}
- .login-input-wrap{position:relative;margin-bottom:4px}
  .login-input{width:100%;padding:16px 20px;border:2px solid var(--border);border-radius:14px;background:var(--bg);color:var(--text);font-size:18px;letter-spacing:5px;text-align:center;outline:none;transition:all .3s;font-family:monospace;font-weight:600}
  .login-input:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(0,64,152,.1);background:#fff}
  .login-input::placeholder{color:#b0b0c0;letter-spacing:2px;font-size:14px;font-weight:400}
@@ -42,7 +40,6 @@
  /* ===== Main Screen ===== */
  #mainScreen{position:fixed;inset:0;display:none;background:#f5f6fa;overflow:hidden}
  .main-header{position:fixed;top:0;left:0;right:0;z-index:20;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);animation:slideDown .4s ease}
- @keyframes slideDown{from{transform:translateY(-100%)}to{transform:translateY(0)}}
  .main-header-left{display:flex;align-items:center;gap:12px}
  .main-header-icon{width:36px;height:36px;border-radius:10px;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px}
  .main-header h1{font-size:17px;font-weight:800;color:var(--text);letter-spacing:1px}
@@ -54,27 +51,26 @@
  
  /* ===== Radial Menu ===== */
  .radial-wrap{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
- .radial-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#1a5cb5);display:flex;align-items:center;justify-content:center;font-size:22px;z-index:2;color:#fff;box-shadow:0 4px 16px rgba(0,64,152,.25);cursor:default;transition:all .4s}
- .radial-center:hover{transform:translate(-50%,-50%) scale(1.05);box-shadow:0 8px 30px rgba(0,64,152,.35)}
- .radial-node{position:absolute;width:76px;height:76px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .4s cubic-bezier(.34,1.56,.64,1);background:#fff;border:1.5px solid var(--border);box-shadow:var(--shadow);z-index:3}
- .radial-node:hover{transform:translate(-50%,-50%) scale(1.12)!important;border-color:var(--primary);box-shadow:0 8px 30px rgba(0,64,152,.12)}
+ .radial-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#1a5cb5);display:flex;align-items:center;justify-content:center;font-size:22px;z-index:2;color:#fff;box-shadow:0 4px 16px rgba(0,64,152,.25);cursor:default;animation:scaleIn .3s ease}
+ @keyframes scaleIn{from{transform:translate(-50%,-50%) scale(0);opacity:0}to{transform:translate(-50%,-50%) scale(1);opacity:1}}
+ @keyframes nodeAppear{0%{transform:translate(-50%,-50%) rotate(-180deg) scale(0);opacity:0}70%{transform:translate(-50%,-50%) rotate(15deg) scale(1.1)}100%{transform:translate(-50%,-50%) rotate(0deg) scale(1);opacity:1}}
+ .radial-node{position:absolute;width:76px;height:76px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);background:#fff;border:1.5px solid var(--border);box-shadow:var(--shadow);z-index:3;opacity:0;animation:nodeAppear .5s cubic-bezier(.34,1.56,.64,1) forwards}
+ .radial-node:hover{border-color:var(--primary)!important;box-shadow:0 8px 30px rgba(0,64,152,.12)!important;z-index:10}
  .radial-node .icon{font-size:22px;margin-bottom:3px;line-height:1}
  .radial-node .label{font-size:10px;color:var(--dim);white-space:nowrap;font-weight:500;letter-spacing:.5px}
- .radial-node .ring{position:absolute;inset:-3px;border-radius:50%;border:2px solid transparent;transition:all .4s}
- .radial-node:hover .ring{border-color:rgba(0,64,152,.15)}
  
- .bg-circles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
- .bg-circles .c{position:absolute;border-radius:50%;opacity:.03}
- .bg-circles .c1{width:500px;height:500px;background:var(--primary);top:-100px;right:-100px;animation:float1 20s ease-in-out infinite}
- .bg-circles .c2{width:350px;height:350px;background:var(--accent);bottom:-80px;left:-80px;animation:float2 25s ease-in-out infinite}
- .bg-circles .c3{width:200px;height:200px;background:var(--primary);top:50%;left:30%;animation:float3 30s ease-in-out infinite}
+ /* Background circles */
+ .bg-layer{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+ .bg-layer .c{position:absolute;border-radius:50%;opacity:.03}
+ .bg-layer .c1{width:500px;height:500px;background:var(--primary);top:-100px;right:-100px;animation:float1 20s ease-in-out infinite}
+ .bg-layer .c2{width:350px;height:350px;background:var(--accent);bottom:-80px;left:-80px;animation:float2 25s ease-in-out infinite}
+ .bg-layer .c3{width:200px;height:200px;background:var(--primary);top:50%;left:30%;animation:float3 30s ease-in-out infinite}
  @keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,30px)}}
  @keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,-20px)}}
  @keyframes float3{0%,100%{transform:translate(0,0)}50%{transform:translate(-20px,40px)}}
  
  /* ===== Content Panel ===== */
  #contentPanel{position:fixed;inset:0;z-index:50;display:none;background:#fff;overflow-y:auto;animation:slideRight .35s ease}
- @keyframes slideRight{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
  .content-header{position:sticky;top:0;z-index:10;padding:16px 28px;display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
  .content-back{width:38px;height:38px;border-radius:10px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
  .content-back:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
@@ -113,36 +109,24 @@
  </head>
  <body>
  
- <!-- Login Screen -->
  <div id="loginScreen">
    <div class="login-container">
      <div class="login-icon">&#9874;</div>
      <div class="login-badge">CUMT 2026</div>
      <div class="login-title">矿洞新生指南</div>
      <div class="login-sub">中国矿业大学 · 输入邀请码开启你的矿大之旅</div>
-     <div class="login-input-wrap">
-       <input class="login-input" id="codeInput" type="text" placeholder="CUMT-XXXXXX" maxlength="11" autocomplete="off" spellcheck="false">
-     </div>
+     <input class="login-input" id="codeInput" type="text" placeholder="CUMT-XXXXXX" maxlength="11" autocomplete="off" spellcheck="false">
      <button class="login-btn" id="loginBtn" onclick="verifyCode()">进入矿洞</button>
      <div class="login-error" id="loginError">邀请码无效，请检查后重试</div>
      <div class="login-getcode">还没有邀请码？<a href="#" onclick="showHowToGet();return false">加入新生群领取 →</a></div>
-     <div class="login-footer">
-       欧阳深团队 —— VGCNCD 创作<br>
-       为中国矿业大学新生 · 用心打造
-     </div>
+     <div class="login-footer">欧阳深团队 —— VGCNCD 创作<br>为中国矿业大学新生 · 用心打造</div>
    </div>
  </div>
  
- <!-- Toast -->
  <div class="toast" id="toast"></div>
  
- <!-- Main Screen -->
  <div id="mainScreen">
-   <div class="bg-circles">
-     <div class="c c1"></div>
-     <div class="c c2"></div>
-     <div class="c c3"></div>
-   </div>
+   <div class="bg-layer"><div class="c c1"></div><div class="c c2"></div><div class="c c3"></div></div>
    <header class="main-header">
      <div class="main-header-left">
        <div class="main-header-icon">&#9874;</div>
@@ -152,7 +136,6 @@
        </div>
      </div>
      <div class="main-header-right">
-       <span style="font-size:11px;color:#9ca3af;display:none" id="userCodeDisplay"></span>
        <button class="header-btn" onclick="showCredit()">关于</button>
        <button class="header-btn danger" onclick="logout()">退出</button>
      </div>
@@ -160,7 +143,6 @@
    <div class="radial-wrap" id="radialContainer"></div>
  </div>
  
- <!-- Content Panel -->
  <div id="contentPanel">
    <div class="content-header">
      <button class="content-back" onclick="closeContent()">&#8592;</button>
@@ -170,7 +152,6 @@
  </div>
  
  <script>
- // ===== Content =====
  const SECTIONS = [
    {id:"history",icon:"\u{1F3DB}",title:"百年矿大",content:`
  <h3>百年校史</h3>
@@ -181,8 +162,6 @@
  <div class="highlight"><strong>崇德 · 尚学 · 求是 · 创新</strong><br>这四个词凝聚了矿大人的精神追求：崇尚道德、重视学问、追求真理、勇于创新。</div>
  <h3>校区格局</h3>
  <p><strong>南湖校区</strong>（主校区）：位于徐州铜山区大学路1号，占地约2800亩，现代化园林式校园，大部分本科生、研究生在此就读。<br><br><strong>文昌校区</strong>（老校区）：位于徐州泉山区，矿大精神发源地，环境清幽，承载着百年矿大的历史记忆。</p>
- <h3>学校特色</h3>
- <p>矿大拥有多个国家重点实验室和国家工程研究中心。与美国、英国、德国等数十个国家的知名高校建立了合作关系，为学生提供广阔的国际交流平台。</p>
  `},
    {id:"campus",icon:"\u{1F3E0}",title:"校园概况",content:`
  <h3>南湖校区</h3>
@@ -195,7 +174,7 @@
    <li><strong>大学生活动中心</strong>：社团活动、文艺演出的主要场所</li>
  </ul>
  <h3>校园亮点</h3>
- <p>矿大校园是徐州最美的校园之一，春天樱花烂漫、夏天镜湖荷花、秋天银杏金黄、冬天雪景如画。校园内还养有黑天鹅、锦鲤等，为校园增添生机。校内交通便利，有共享电动车和校园公交，还有校际班车往来南湖和文昌校区。</p>
+ <p>矿大校园是徐州最美的校园之一，春天樱花烂漫、夏天镜湖荷花、秋天银杏金黄、冬天雪景如画。校园内还有黑天鹅、锦鲤等，为校园增添生机。校内交通便利，有共享电动车和校园公交，还有校际班车往来南湖和文昌校区。</p>
  `},
    {id:"dorm",icon:"\u{1F6CF}",title:"宿舍指南",content:`
  <h3>宿舍条件</h3>
@@ -220,19 +199,17 @@
    <li><strong>三食堂（音乐餐厅）</strong>：装修最时尚，可边听音乐边吃饭，麻辣香锅是招牌</li>
    <li><strong>教职工餐厅</strong>：晚餐和周末对学生开放，环境安静</li>
  </ul>
- <h3>周边美食</h3>
- <p>学校南门外的"堕落街"是小吃天堂：烧烤、麻辣烫、炸鸡、奶茶应有尽有。周边还有铜山万达广场等。</p>
  <div class="highlight">强烈推荐：三食堂的麻辣香锅、一食堂的牛肉板面、二食堂一楼的自选早餐！</div>
  `},
    {id:"study",icon:"\u{1F4DA}",title:"学习攻略",content:`
  <h3>图书馆使用指南</h3>
  <p>南湖图书馆开馆时间通常为7:00-22:00。馆内设有：普通自习区、静音自习区、电子阅览区、研讨间（需预约）。考试周期间座位紧张，建议早起占位。</p>
  <h3>选课须知</h3>
- <p>每学期分为通识选修课和专业必修/选修课。选课通过教务系统进行，热门课程需要拼手速。建议提前了解培养方案，做好四年规划，咨询学长学姐推荐课程和老师，大一建议选20-24学分。</p>
+ <p>每学期分为通识选修课和专业必修/选修课。建议提前了解培养方案做好四年规划，咨询学长学姐推荐课程，大一建议选20-24学分。</p>
  <h3>校园网</h3>
  <p>校园网覆盖教学区和宿舍区。每月有免费流量额度，超出需充值。学校提供VPN方便校外访问图书馆电子资源。</p>
  <h3>奖学金与竞赛</h3>
- <p>矿大设有国家奖学金、国家励志奖学金、校奖学金等。此外还有"挑战杯"、大创、数学建模等各类竞赛。积极参加对综合素质和保研都有帮助。</p>
+ <p>矿大设有国家奖学金、国家励志奖学金、校奖学金等。还有"挑战杯"、大创、数学建模等各类竞赛，积极参加对综合素质和保研都有帮助。</p>
  `},
    {id:"register",icon:"\u{1F4CB}",title:"报到流程",content:`
  <h3>时间安排</h3>
@@ -249,48 +226,43 @@
  </ul>
  <h3>报到流程</h3>
  <p>到校 → 找到学院迎新点 → 核验身份 → 领取校园卡/宿舍钥匙 → 前往宿舍 → 办理入住</p>
- <div class="highlight">报到当天，学校在徐州站、徐州东站设有迎新点，有学长学姐举牌接站，跟着"中国矿业大学"的指示牌走就好。</div>
+ <div class="highlight">报到当天，学校在徐州站、徐州东站设有迎新点，有学长学姐举牌接站，跟着"中国矿业大学"指示牌走就好。</div>
  `},
    {id:"military",icon:"\u{1F396}",title:"军训须知",content:`
  <h3>军训安排</h3>
- <p>新生入学报到后通常进行<strong>2-3周</strong>的军训。训练内容包括队列训练、军体拳、射击训练（模拟枪）、拉歌、内务整理等。训练场地主要在校园内的操场和主干道。</p>
+ <p>新生入学报到后通常进行<strong>2-3周</strong>的军训。训练内容包括队列训练、军体拳、射击训练（模拟枪）、拉歌、内务整理等。</p>
  <h3>必备物品</h3>
  <ul>
-   <li><strong>防晒霜</strong>：徐州9月阳光依然强烈，SPF50+是必备</li>
-   <li><strong>大水杯</strong>：建议1.5L以上，训练时补水很重要</li>
+   <li><strong>防晒霜</strong>：徐州9月阳光强烈，SPF50+必备</li>
+   <li><strong>大水杯</strong>：建议1.5L以上，补水很重要</li>
    <li><strong>舒适的运动鞋</strong>：军训发的鞋偏硬，可自备软鞋垫</li>
-   <li><strong>创可贴、藿香正气水</strong>等应急药品</li>
-   <li><strong>纸巾/湿巾</strong>：擦汗很方便</li>
+   <li><strong>应急药品</strong>：创可贴、藿香正气水等</li>
  </ul>
  <h3>军训建议</h3>
- <p>军训虽然辛苦，但也是大学里最特别的经历之一。你会在这段时间快速认识同班同学，建立深厚的"战友"情谊。坚持就是胜利！</p>
+ <p>军训虽然辛苦，但也是大学里最特别的经历之一。你会在这段时间快速认识同班同学，建立深厚的友谊。坚持就是胜利！</p>
  `},
    {id:"transport",icon:"\u{1F68C}",title:"交通出行",content:`
  <h3>如何到徐州</h3>
  <ul>
-   <li><strong>高铁</strong>：大多数新生坐到<strong>徐州东站</strong>，出站后可打车到南湖校区（约30-40分钟，费用40-50元），或乘地铁1号线转公交</li>
-   <li><strong>普速列车</strong>：到<strong>徐州站</strong>，打车到南湖约30分钟（约30元），或乘公交直达</li>
-   <li><strong>飞机</strong>：飞至<strong>徐州观音国际机场</strong>，乘坐机场大巴到市区再转车到校</li>
+   <li><strong>高铁</strong>：<strong>徐州东站</strong>，打车到南湖约30-40分钟（40-50元），或乘地铁转公交</li>
+   <li><strong>普速</strong>：<strong>徐州站</strong>，打车到南湖约30分钟（约30元），或乘公交直达</li>
+   <li><strong>飞机</strong>：<strong>徐州观音机场</strong>，乘机场大巴到市区再转车</li>
  </ul>
  <h3>校区间通勤</h3>
- <p>南湖校区 ↔ 文昌校区有校车免费乘坐，约20-30分钟一班，也可乘坐公交或打车。</p>
- <h3>校内出行</h3>
- <p>校园内有共享电动车和共享单车。还有校园公交（小白车），招手即停，1元/次，覆盖校园主要区域。</p>
- <div class="highlight">建议下载徐州地铁APP，使用高德/百度地图导航。徐州公交支持支付宝扫码乘车。</div>
+ <p>南湖 ↔ 文昌有校车免费乘坐，约20-30分钟一班。</p>
+ <div class="highlight">建议下载徐州地铁APP。徐州公交支持支付宝扫码乘车。</div>
  `},
    {id:"life",icon:"\u{1F3D8}",title:"徐州生活",content:`
  <h3>徐州气候</h3>
- <p>四季分明：夏季（6-8月）炎热可达38℃，需备夏装和防晒；冬季（12-2月）干冷最低约-5℃，有暖气，备好羽绒服即可。春秋较短但气候宜人，是校园最美的季节。</p>
+ <p>四季分明：夏季炎热可达38°C，备好夏装防晒；冬季干冷最低约-5°C，有暖气供暖，备好羽绒服即可。春秋较短但气候宜人，是校园最美的季节。</p>
  <h3>徐州好去处</h3>
  <ul>
-   <li><strong>云龙湖</strong>：5A级景区，离学校近，散步骑行都很好</li>
-   <li><strong>云龙山</strong>：俯瞰徐州全景的好地方</li>
+   <li><strong>云龙湖</strong>：5A级景区，离学校近，散步骑行好去处</li>
+   <li><strong>云龙山</strong>：俯瞰徐州全景</li>
    <li><strong>户部山</strong>：古建筑群，了解徐州历史文化</li>
-   <li><strong>回龙窝</strong>：历史文化街区，适合周末闲逛</li>
    <li><strong>徐州博物馆</strong>：了解两汉文化必去</li>
  </ul>
- <h3>生活贴士</h3>
- <p>徐州饮食偏咸辣，特色美食有地锅鸡、把子肉、烙馍等。生活消费水平在江苏省内偏低。周末去周边城市（南京、济南、郑州）坐高铁1-2小时可达。</p>
+ <p>徐州饮食偏咸辣，特色美食有地锅鸡、把子肉、烙馍等。消费水平在江苏省内偏低，周末去南京、济南、郑州坐高铁1-2小时可达。</p>
  `},
    {id:"contact",icon:"\u{1F4E7}",title:"联系我们",content:`
  <h3>新生交流群</h3>
@@ -309,134 +281,112 @@
  // ===== Invitation Codes =====
  const CODE_SEED = 20260721;
  const TOTAL_CODES = 50000;
- const USED_CODES_KEY = "cumt_used_codes_v2";
+ const USED_CODES_KEY = "cumt_used_codes_v3";
+ function seededRandom(s){let seed=s;return function(){seed=(seed*1664525+1013904223)&0x7FFFFFFF;return seed/0x7FFFFFFF}}
+ function genCode(i){const r=seededRandom(CODE_SEED+i*9973),c="23456789ABCDEFGHJKLMNPQRSTUVWXYZ";let s="CUMT-";for(let j=0;j<6;j++)s+=c[Math.floor(r()*c.length)];return s}
+ const CODES=new Set(Array.from({length:TOTAL_CODES},(_,i)=>genCode(i)));
+ function getUsedCodes(){try{return new Set(JSON.parse(localStorage.getItem(USED_CODES_KEY)||"[]"))}catch{return new Set()}}
+ function markUsed(c){const u=getUsedCodes();u.add(c);localStorage.setItem(USED_CODES_KEY,JSON.stringify([...u]))}
+ function isUsed(c){return getUsedCodes().has(c)}
  
- function seededRandom(seed) { let s = seed; return function() { s = (s * 1664525 + 1013904223) & 0x7FFFFFFF; return s / 0x7FFFFFFF; } }
+ function showToast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2500)}
  
- function genCode(index) {
-   const r = seededRandom(CODE_SEED + index * 9973);
-   let c = "CUMT-";
-   const ch = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
-   for (let i = 0; i < 6; i++) c += ch[Math.floor(r() * ch.length)];
-   return c;
+ function verifyCode(){
+   const i=document.getElementById("codeInput"),e=document.getElementById("loginError"),b=document.getElementById("loginBtn"),c=i.value.trim().toUpperCase();
+   e.classList.remove("show","success");
+   if(!c){e.textContent="请输入邀请码";e.classList.add("show");return}
+   if(!/^CUMT-[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{6}$/.test(c)){e.textContent="格式：CUMT-XXXXXX（6位大写字母数字）";e.classList.add("show");return}
+   b.disabled=true;b.textContent="验证中...";
+   setTimeout(()=>{
+     if(!CODES.has(c)){e.textContent="邀请码无效";e.classList.add("show");b.disabled=false;b.textContent="进入矿洞";return}
+     if(isUsed(c)){e.textContent="该邀请码已被使用";e.classList.add("show");b.disabled=false;b.textContent="进入矿洞";return}
+     markUsed(c);enterMain();
+   },500);
  }
  
- const CODES = new Set(Array.from({length:TOTAL_CODES}, (_,i) => genCode(i)));
+ function showHowToGet(){const e=document.getElementById("loginError");e.style.color="#059669";e.textContent="加入新生群领取邀请码，群号：123456789";e.classList.add("show")}
  
- function getUsed() { try { return new Set(JSON.parse(localStorage.getItem(USED_CODES_KEY)||"[]")) } catch { return new Set() } }
- function markUsed(c) { const u = getUsed(); u.add(c); localStorage.setItem(USED_CODES_KEY, JSON.stringify([...u])) }
- function isUsed(c) { return getUsed().has(c) }
- 
- function showToast(msg) {
-   const t = document.getElementById("toast");
-   t.textContent = msg; t.classList.add("show");
-   setTimeout(() => t.classList.remove("show"), 2500);
- }
- 
- function verifyCode() {
-   const input = document.getElementById("codeInput");
-   const error = document.getElementById("loginError");
-   const btn = document.getElementById("loginBtn");
-   const code = input.value.trim().toUpperCase();
-   error.classList.remove("show","success");
-   if (!code) { error.textContent = "请输入邀请码"; error.classList.add("show"); return }
-   if (!/^CUMT-[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{6}$/.test(code)) { error.textContent = "格式不正确，示例：CUMT-NX7VLS"; error.classList.add("show"); return }
-   btn.disabled = true; btn.textContent = "验证中...";
-   setTimeout(() => {
-     if (!CODES.has(code)) { error.textContent = "邀请码无效"; error.classList.add("show"); btn.disabled = false; btn.textContent = "进入矿洞"; return }
-     if (isUsed(code)) { error.textContent = "该邀请码已被使用"; error.classList.add("show"); btn.disabled = false; btn.textContent = "进入矿洞"; return }
-     markUsed(code);
-     document.getElementById("userCodeDisplay").textContent = code;
-     enterMain();
-   }, 500);
- }
- 
- function showHowToGet() {
-   const e = document.getElementById("loginError");
-   e.style.color = "#059669";
-   e.textContent = "加入新生群领取邀请码，群号：123456789";
-   e.classList.add("show");
- }
- 
- function enterMain() {
-   document.getElementById("loginScreen").style.display = "none";
-   document.getElementById("mainScreen").style.display = "block";
+ function enterMain(){
+   document.getElementById("loginScreen").style.display="none";
+   document.getElementById("mainScreen").style.display="block";
    initRadial();
  }
  
- function logout() {
-   document.getElementById("mainScreen").style.display = "none";
-   document.getElementById("contentPanel").style.display = "none";
-   document.getElementById("loginScreen").style.display = "flex";
-   document.getElementById("codeInput").value = "";
-   document.getElementById("loginBtn").disabled = false;
-   document.getElementById("loginBtn").textContent = "进入矿洞";
+ function logout(){
+   ["mainScreen","contentPanel"].forEach(id=>document.getElementById(id).style.display="none");
+   document.getElementById("loginScreen").style.display="flex";
+   document.getElementById("codeInput").value="";
+   document.getElementById("loginBtn").disabled=false;
+   document.getElementById("loginBtn").textContent="进入矿洞";
+   radialDone=false;document.getElementById("radialContainer").innerHTML="";
  }
  
- function showCredit() {
-   showToast("欧阳深团队 —— VGCNCD 创作 · 为中国矿业大学新生用心打造");
- }
+ function showCredit(){showToast("欧阳深团队 —— VGCNCD 创作 · 为中国矿业大学新生用心打造")}
  
- // ===== Radial Menu =====
- let radialDone = false;
- function initRadial() {
-   if (radialDone) return; radialDone = true;
-   const wrap = document.getElementById("radialContainer");
-   const n = SECTIONS.length;
-   const r = Math.min(window.innerWidth, window.innerHeight) * 0.30;
-   const s = Math.min(76, window.innerWidth * 0.12);
+ // ===== Radial Menu with Spin Animation =====
+ let radialDone=false;
+ function initRadial(){
+   if(radialDone)return;radialDone=true;
+   const wrap=document.getElementById("radialContainer"),n=SECTIONS.length;
+   const radius=Math.min(window.innerWidth,window.innerHeight)*0.30,nodeSize=Math.min(76,window.innerWidth*0.12);
  
-   const center = document.createElement("div");
-   center.className = "radial-center";
-   center.textContent = "\u{1F50D}";
-   wrap.appendChild(center);
+   // Center dot
+   const ctr=document.createElement("div");ctr.className="radial-center";ctr.textContent="\u{1F50D}";wrap.appendChild(ctr);
  
-   SECTIONS.forEach((sec, i) => {
-     const a = (i / n) * 2 * Math.PI - Math.PI / 2;
-     const x = Math.cos(a) * r, y = Math.sin(a) * r;
-     const node = document.createElement("div");
-     node.className = "radial-node";
-     node.style.cssText = `width:${s}px;height:${s}px;transform:translate(${x-s/2}px,${y-s/2}px);transition-delay:${i*0.03}s`;
-     node.innerHTML = `<div class="ring"></div><div class="icon">${sec.icon}</div><div class="label">${sec.title}</div>`;
-     node.onclick = () => openContent(i);
-     wrap.appendChild(node);
+   // Create nodes at center first, then animate outward with spin
+   SECTIONS.forEach((sec,i)=>{
+     const a=(i/n)*2*Math.PI-Math.PI/2;
+     const fx=Math.cos(a)*radius,fy=Math.sin(a)*radius;
+     const nd=document.createElement("div");nd.className="radial-node";
+     nd.innerHTML=`<div class="icon">${sec.icon}</div><div class="label">${sec.title}</div>`;
+     nd.style.cssText=`width:${nodeSize}px;height:${nodeSize}px;left:50%;top:50%;transform:translate(-50%,-50%) rotate(0deg) scale(0);opacity:0;transition:all 0s`;
+     nd.onclick=()=>openContent(i);
+     wrap.appendChild(nd);
+ 
+     // Staggered animation: expand from center with rotation
+     requestAnimationFrame(()=>{
+       requestAnimationFrame(()=>{
+         const rot=-180+360*(i/n);
+         nd.style.cssText=`width:${nodeSize}px;height:${nodeSize}px;left:50%;top:50%;opacity:1;
+           transform:translate(${-nodeSize/2}px,${-nodeSize/2}px) translate(${fx}px,${fy}px) rotate(${rot}deg);
+           transition:all 0.55s cubic-bezier(.34,1.56,.64,1) ${i*0.06}s`;
+       });
+     });
    });
+ 
+   // After expansion, remove the rotation but keep position
+   setTimeout(()=>{
+     document.querySelectorAll(".radial-node").forEach((nd,i)=>{
+       const a=(i/n)*2*Math.PI-Math.PI/2;
+       const fx=Math.cos(a)*radius,fy=Math.sin(a)*radius;
+       nd.style.transition=`all 0.4s cubic-bezier(.4,0,.2,1) 0s`;
+       nd.style.transform=`translate(${-nodeSize/2}px,${-nodeSize/2}px) translate(${fx}px,${fy}px) rotate(0deg)`;
+     });
+   }, 550+SECTIONS.length*60+200);
  }
  
  // ===== Content =====
- function openContent(i) {
-   const sec = SECTIONS[i];
-   document.getElementById("contentTitle").textContent = sec.icon + "  " + sec.title;
-   document.getElementById("contentBody").innerHTML = sec.content;
-   document.getElementById("contentPanel").style.display = "block";
-   document.getElementById("contentPanel").scrollTop = 0;
- }
- function closeContent() { document.getElementById("contentPanel").style.display = "none" }
+ function openContent(i){const s=SECTIONS[i];document.getElementById("contentTitle").textContent=s.icon+"  "+s.title;document.getElementById("contentBody").innerHTML=s.content;document.getElementById("contentPanel").style.display="block";document.getElementById("contentPanel").scrollTop=0}
+ function closeContent(){document.getElementById("contentPanel").style.display="none"}
  
- // ===== Enter =====
- document.getElementById("codeInput").addEventListener("keydown", function(e) { if (e.key === "Enter") verifyCode() });
+ document.getElementById("codeInput").addEventListener("keydown",function(e){if(e.key==="Enter")verifyCode()});
  
- // ===== Resize =====
- window.addEventListener("resize", () => {
-   if (document.getElementById("mainScreen").style.display === "block") { radialDone = false; document.getElementById("radialContainer").innerHTML = ""; initRadial() }
- });
+ window.addEventListener("resize",()=>{if(document.getElementById("mainScreen").style.display==="block"){radialDone=false;document.getElementById("radialContainer").innerHTML="";initRadial()}});
  
- // ===== Background animation =====
- (function initBg() {
-   const canvas = document.createElement("canvas");
-   canvas.style.cssText = "position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.4";
-   document.getElementById("mainScreen").prepend(canvas);
-   const ctx = canvas.getContext("2d");
-   let w = canvas.width = window.innerWidth, h = canvas.height = window.innerHeight;
-   const pts = Array.from({length:40}, () => ({x:Math.random()*w, y:Math.random()*h, vx:(Math.random()-.5)*.2, vy:(Math.random()-.5)*.2, r:Math.random()*2+1}));
-   function draw() {
+ // ===== Background particles =====
+ (function(){
+   const c=document.createElement("canvas");c.style.cssText="position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.4";
+   document.getElementById("mainScreen").prepend(c);
+   const ctx=c.getContext("2d");let w=c.width=window.innerWidth,h=c.height=window.innerHeight;
+   const pts=Array.from({length:35},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.2,vy:(Math.random()-.5)*.2,r:Math.random()*2+1}));
+   function draw(){
      ctx.clearRect(0,0,w,h);
-     pts.forEach(p => { p.x+=p.vx; p.y+=p.vy; if(p.x<0)p.x=w; if(p.x>w)p.x=0; if(p.y<0)p.y=h; if(p.y>h)p.y=0;
-       ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle="rgba(0,64,152,"+(.08+Math.random()*.1)+")"; ctx.fill() });
+     pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;
+       ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle="rgba(0,64,152,"+(.06+Math.random()*.08)+")";ctx.fill()});
      requestAnimationFrame(draw);
    }
    draw();
-   window.addEventListener("resize", () => { w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight });
+   window.addEventListener("resize",()=>{w=c.width=window.innerWidth;h=c.height=window.innerHeight});
  })();
  </script>
  </body>
