@@ -11,33 +11,22 @@
  body{font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;background:#f5f6fa;color:#1a1a2e;overflow:hidden;height:100vh;width:100vw;-webkit-font-smoothing:antialiased}
  :root{--primary:#004098;--primary-light:#e8eef8;--accent:#e8a838;--accent-light:#fef6e8;--bg:#f5f6fa;--card:#fff;--text:#1a1a2e;--dim:#6b7280;--border:#e5e7eb;--shadow:0 4px 24px rgba(0,0,0,.06);--shadow-lg:0 8px 40px rgba(0,0,0,.08);--radius:16px}
  
- /* ===== Login ===== */
  #loginScreen{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:#f5f6fa;overflow-y:auto;padding:24px}
  .login-container{width:420px;max-width:100%;padding:52px 40px;text-align:center;background:#fff;border-radius:24px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;animation:fadeIn .5s ease}
  .login-container::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary),var(--accent),var(--primary))}
  @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
  @keyframes slideDown{from{transform:translateY(-100%)}to{transform:translateY(0)}}
  @keyframes slideRight{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+ @keyframes scaleIn{from{transform:translate(-50%,-50%) scale(0);opacity:0}to{transform:translate(-50%,-50%) scale(1);opacity:1}}
  .login-icon{width:72px;height:72px;margin:0 auto 20px;background:linear-gradient(135deg,var(--primary),#1a5cb5);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:32px;color:#fff;box-shadow:0 8px 24px rgba(0,64,152,.25)}
  .login-badge{display:inline-block;padding:4px 14px;border-radius:50px;background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:600;letter-spacing:2px;margin-bottom:12px}
  .login-title{font-size:26px;font-weight:900;color:var(--text);margin-bottom:4px;letter-spacing:3px}
- .login-sub{font-size:14px;color:var(--dim);margin-bottom:32px}
- .login-input{width:100%;padding:16px 20px;border:2px solid var(--border);border-radius:14px;background:var(--bg);color:var(--text);font-size:18px;letter-spacing:5px;text-align:center;outline:none;transition:all .3s;font-family:monospace;font-weight:600}
- .login-input:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(0,64,152,.1);background:#fff}
- .login-input::placeholder{color:#b0b0c0;letter-spacing:2px;font-size:14px;font-weight:400}
- .login-btn{width:100%;margin-top:18px;padding:16px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--primary),#1a5cb5);color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:all .3s;letter-spacing:2px}
+ .login-sub{font-size:14px;color:var(--dim);margin-bottom:28px}
+ .login-btn{width:100%;padding:16px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--primary),#1a5cb5);color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:all .3s;letter-spacing:2px}
  .login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,64,152,.3)}
  .login-btn:active{transform:translateY(0)}
- .login-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
- .login-error{color:#dc2626;font-size:13px;margin-top:12px;min-height:22px;opacity:0;transition:all .3s;font-weight:500}
- .login-error.show{opacity:1}
- .login-error.success{color:#059669}
- .login-getcode{margin-top:24px;font-size:13px;color:var(--dim)}
- .login-getcode a{color:var(--primary);cursor:pointer;text-decoration:none;font-weight:600}
- .login-getcode a:hover{text-decoration:underline}
  .login-footer{margin-top:28px;padding-top:20px;border-top:1px solid var(--border);font-size:12px;color:#9ca3af;line-height:1.8}
  
- /* ===== Main Screen ===== */
  #mainScreen{position:fixed;inset:0;display:none;background:#f5f6fa;overflow:hidden}
  .main-header{position:fixed;top:0;left:0;right:0;z-index:20;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);animation:slideDown .4s ease}
  .main-header-left{display:flex;align-items:center;gap:12px}
@@ -47,19 +36,14 @@
  .main-header-right{display:flex;align-items:center;gap:12px}
  .header-btn{padding:7px 16px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--dim);font-size:12px;cursor:pointer;transition:all .2s;font-weight:500}
  .header-btn:hover{background:var(--bg);color:var(--text);border-color:#c0c0d0}
- .header-btn.danger:hover{background:#fef2f2;color:#dc2626;border-color:#fecaca}
  
- /* ===== Radial Menu ===== */
  .radial-wrap{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
  .radial-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#1a5cb5);display:flex;align-items:center;justify-content:center;font-size:22px;z-index:2;color:#fff;box-shadow:0 4px 16px rgba(0,64,152,.25);cursor:default;animation:scaleIn .3s ease}
- @keyframes scaleIn{from{transform:translate(-50%,-50%) scale(0);opacity:0}to{transform:translate(-50%,-50%) scale(1);opacity:1}}
- @keyframes nodeAppear{0%{transform:translate(-50%,-50%) rotate(-180deg) scale(0);opacity:0}70%{transform:translate(-50%,-50%) rotate(15deg) scale(1.1)}100%{transform:translate(-50%,-50%) rotate(0deg) scale(1);opacity:1}}
- .radial-node{position:absolute;width:76px;height:76px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);background:#fff;border:1.5px solid var(--border);box-shadow:var(--shadow);z-index:3;opacity:0;animation:nodeAppear .5s cubic-bezier(.34,1.56,.64,1) forwards}
+ .radial-node{position:absolute;width:76px;height:76px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);background:#fff;border:1.5px solid var(--border);box-shadow:var(--shadow);z-index:3;opacity:0}
  .radial-node:hover{border-color:var(--primary)!important;box-shadow:0 8px 30px rgba(0,64,152,.12)!important;z-index:10}
  .radial-node .icon{font-size:22px;margin-bottom:3px;line-height:1}
  .radial-node .label{font-size:10px;color:var(--dim);white-space:nowrap;font-weight:500;letter-spacing:.5px}
  
- /* Background circles */
  .bg-layer{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
  .bg-layer .c{position:absolute;border-radius:50%;opacity:.03}
  .bg-layer .c1{width:500px;height:500px;background:var(--primary);top:-100px;right:-100px;animation:float1 20s ease-in-out infinite}
@@ -69,7 +53,6 @@
  @keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,-20px)}}
  @keyframes float3{0%,100%{transform:translate(0,0)}50%{transform:translate(-20px,40px)}}
  
- /* ===== Content Panel ===== */
  #contentPanel{position:fixed;inset:0;z-index:50;display:none;background:#fff;overflow-y:auto;animation:slideRight .35s ease}
  .content-header{position:sticky;top:0;z-index:10;padding:16px 28px;display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
  .content-back{width:38px;height:38px;border-radius:10px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
@@ -88,15 +71,12 @@
  .content-body a:hover{text-decoration:underline}
  .content-credit{margin-top:40px;padding:20px;text-align:center;border-top:1px solid var(--border);font-size:12px;color:#9ca3af;line-height:2}
  
- /* ===== Toast ===== */
  .toast{position:fixed;bottom:40px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--text);color:#fff;padding:12px 24px;border-radius:12px;font-size:14px;font-weight:500;opacity:0;transition:all .4s;z-index:200;pointer-events:none;box-shadow:0 4px 20px rgba(0,0,0,.15)}
  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
  
- /* ===== Responsive ===== */
  @media(max-width:640px){
  .login-container{padding:40px 24px;border-radius:20px}
  .login-title{font-size:22px}
- .login-input{font-size:16px;padding:14px 16px}
  .radial-node{width:62px;height:62px}
  .radial-node .icon{font-size:18px}
  .radial-node .label{font-size:9px}
@@ -114,11 +94,8 @@
      <div class="login-icon">&#9874;</div>
      <div class="login-badge">CUMT 2026</div>
      <div class="login-title">矿洞新生指南</div>
-     <div class="login-sub">中国矿业大学 · 输入邀请码开启你的矿大之旅</div>
-     <input class="login-input" id="codeInput" type="text" placeholder="CUMT-XXXXXX" maxlength="11" autocomplete="off" spellcheck="false">
-     <button class="login-btn" id="loginBtn" onclick="verifyCode()">进入矿洞</button>
-     <div class="login-error" id="loginError">邀请码无效，请检查后重试</div>
-     <div class="login-getcode">还没有邀请码？<a href="#" onclick="showHowToGet();return false">加入新生群领取 →</a></div>
+     <div class="login-sub">中国矿业大学 · 为每一颗矿石照亮前路</div>
+     <button class="login-btn" onclick="enterMain()">进入矿洞</button>
      <div class="login-footer">欧阳深团队 —— VGCNCD 创作<br>为中国矿业大学新生 · 用心打造</div>
    </div>
  </div>
@@ -136,8 +113,7 @@
        </div>
      </div>
      <div class="main-header-right">
-       <button class="header-btn" onclick="showCredit()">关于</button>
-       <button class="header-btn danger" onclick="logout()">退出</button>
+       <button class="header-btn" onclick="showToast('欧阳深团队 —— VGCNCD 创作')">关于</button>
      </div>
    </header>
    <div class="radial-wrap" id="radialContainer"></div>
@@ -154,157 +130,49 @@
  <script>
  const SECTIONS = [
    {id:"history",icon:"\u{1F3DB}",title:"百年矿大",content:`
- <h3>百年校史</h3>
- <p>中国矿业大学始建于1909年，前身为焦作路矿学堂，是近代中国创办最早、延续至今的矿业高等学府之一。学校历经十四次搬迁、十二次易名，始终薪火相传，被誉为"煤炭行业的人才摇篮"。</p>
- <h3>办学层次</h3>
- <p>教育部直属全国重点大学，国家"211工程"和"985工程优势学科创新平台"建设高校，2017年入选国家"双一流"建设高校。以工科为主，理工文管法经等多学科协调发展，矿业工程、安全科学与工程等领域处于国内顶尖水平。</p>
- <h3>校训精神</h3>
- <div class="highlight"><strong>崇德 · 尚学 · 求是 · 创新</strong><br>这四个词凝聚了矿大人的精神追求：崇尚道德、重视学问、追求真理、勇于创新。</div>
- <h3>校区格局</h3>
- <p><strong>南湖校区</strong>（主校区）：位于徐州铜山区大学路1号，占地约2800亩，现代化园林式校园，大部分本科生、研究生在此就读。<br><br><strong>文昌校区</strong>（老校区）：位于徐州泉山区，矿大精神发源地，环境清幽，承载着百年矿大的历史记忆。</p>
- `},
+ <h3>百年校史</h3><p>中国矿业大学始建于1909年，前身为焦作路矿学堂，是近代中国创办最早、延续至今的矿业高等学府之一。学校历经十四次搬迁、十二次易名，始终薪火相传，被誉为"煤炭行业的人才摇篮"。</p>
+ <h3>办学层次</h3><p>教育部直属全国重点大学，国家"211工程"和"985工程优势学科创新平台"建设高校，2017年入选国家"双一流"建设高校。矿业工程、安全科学与工程等领域处于国内顶尖水平。</p>
+ <h3>校训精神</h3><div class="highlight"><strong>崇德 · 尚学 · 求是 · 创新</strong><br>崇尚道德、重视学问、追求真理、勇于创新。</div>
+ <h3>校区格局</h3><p><strong>南湖校区</strong>（主校区）：徐州铜山区大学路1号，占地约2800亩，现代化园林式校园。<br><br><strong>文昌校区</strong>（老校区）：徐州泉山区，矿大精神发源地。</p>`},
    {id:"campus",icon:"\u{1F3E0}",title:"校园概况",content:`
- <h3>南湖校区</h3>
- <p>南湖校区坐落在徐州南郊云龙湖畔，校园环境优美，绿化覆盖率高。标志性建筑包括南湖图书馆（造型现代，是学校的文化地标）、行政楼、各学院楼群等。校园内有镜湖、不显山等自然景观，四季景色各异。</p>
- <h3>主要建筑</h3>
- <ul>
-   <li><strong>南湖图书馆</strong>：建筑面积约6万平方米，藏书丰富，设有自习区、电子阅览区、学术报告厅等</li>
-   <li><strong>博学楼 / 博雅楼</strong>：主要教学楼，大部分课程在此进行</li>
-   <li><strong>体育馆</strong>：含游泳馆、篮球馆、羽毛球馆等</li>
-   <li><strong>大学生活动中心</strong>：社团活动、文艺演出的主要场所</li>
- </ul>
- <h3>校园亮点</h3>
- <p>矿大校园是徐州最美的校园之一，春天樱花烂漫、夏天镜湖荷花、秋天银杏金黄、冬天雪景如画。校园内还有黑天鹅、锦鲤等，为校园增添生机。校内交通便利，有共享电动车和校园公交，还有校际班车往来南湖和文昌校区。</p>
- `},
+ <h3>南湖校区</h3><p>坐落在徐州南郊云龙湖畔，校园环境优美，四季景色各异。标志性建筑包括南湖图书馆、行政楼、各学院楼群等。校园内有镜湖、不显山等自然景观。</p>
+ <h3>主要建筑</h3><ul><li><strong>南湖图书馆</strong>：藏书丰富，设有自习区、电子阅览区、研讨间等</li><li><strong>博学楼 / 博雅楼</strong>：主要教学楼</li><li><strong>体育馆</strong>：含游泳馆、篮球馆等</li><li><strong>大学生活动中心</strong>：社团活动、文艺演出的场所</li></ul>
+ <h3>校园亮点</h3><p>校园内养有黑天鹅、锦鲤等。共享电动车和校园公交出行便利，校际班车往来南湖和文昌校区。</p>`},
    {id:"dorm",icon:"\u{1F6CF}",title:"宿舍指南",content:`
- <h3>宿舍条件</h3>
- <p>南湖校区本科生宿舍主要为<strong>4人间</strong>，标配<strong>上床下桌</strong>，配备空调和暖气。大部分宿舍楼有独立卫浴。每栋楼都配备热水房和公共洗衣房。</p>
- <h3>住宿须知</h3>
- <ul>
-   <li>床铺尺寸：约 2.0m × 0.9m，建议自备或到校购买床品</li>
-   <li>宿舍楼有门禁系统，凭校园卡进出，晚上按时关门</li>
-   <li>宿舍内禁止使用大功率电器（电热毯、电饭煲等）</li>
-   <li>校园网接入每个床位，需办理校园网套餐</li>
- </ul>
- <h3>宿舍神器推荐</h3>
- <p>床边挂篮、台灯/酷毙灯、插排（带USB口）、收纳盒、遮光床帘、耳塞眼罩</p>
- <div class="highlight">报到当天可以先到宿舍放行李再去办其他手续，建议携带有轮子的行李箱。</div>
- `},
+ <h3>宿舍条件</h3><p>南湖校区主要为<strong>4人间</strong>，标配<strong>上床下桌</strong>，配备空调和暖气。大部分有独立卫浴，每栋楼配备热水房和洗衣房。</p>
+ <h3>住宿须知</h3><ul><li>床铺约 2.0m × 0.9m，可自带或到校购买床品</li><li>凭校园卡进出，晚上按时关门</li><li>禁止使用大功率电器</li><li>校园网接入每个床位</li></ul>
+ <div class="highlight">报到当天建议先到宿舍放行李再去办手续。</div>`},
    {id:"food",icon:"\u{1F372}",title:"食堂美食",content:`
- <h3>食堂一览</h3>
- <p>南湖校区有多个食堂，各具特色，且价格实惠，月均伙食费约800-1200元。</p>
- <ul>
-   <li><strong>一食堂</strong>：靠近教学区，早餐丰富，牛肉面、煎饼果子不容错过</li>
-   <li><strong>二食堂</strong>：品种最多，自选餐窗口性价比极高，推荐重庆小面、黄焖鸡</li>
-   <li><strong>三食堂（音乐餐厅）</strong>：装修最时尚，可边听音乐边吃饭，麻辣香锅是招牌</li>
-   <li><strong>教职工餐厅</strong>：晚餐和周末对学生开放，环境安静</li>
- </ul>
- <div class="highlight">强烈推荐：三食堂的麻辣香锅、一食堂的牛肉板面、二食堂一楼的自选早餐！</div>
- `},
+ <h3>食堂一览</h3><p>南湖校区有多个食堂，月均伙食费约800-1200元。</p>
+ <ul><li><strong>一食堂</strong>：牛肉面、煎饼果子</li><li><strong>二食堂</strong>：自选餐、重庆小面、黄焖鸡</li><li><strong>三食堂（音乐餐厅）</strong>：麻辣香锅、石锅饭</li></ul>
+ <div class="highlight">强烈推荐：三食堂的麻辣香锅、一食堂的牛肉板面、二食堂的自选早餐！</div>`},
    {id:"study",icon:"\u{1F4DA}",title:"学习攻略",content:`
- <h3>图书馆使用指南</h3>
- <p>南湖图书馆开馆时间通常为7:00-22:00。馆内设有：普通自习区、静音自习区、电子阅览区、研讨间（需预约）。考试周期间座位紧张，建议早起占位。</p>
- <h3>选课须知</h3>
- <p>每学期分为通识选修课和专业必修/选修课。建议提前了解培养方案做好四年规划，咨询学长学姐推荐课程，大一建议选20-24学分。</p>
- <h3>校园网</h3>
- <p>校园网覆盖教学区和宿舍区。每月有免费流量额度，超出需充值。学校提供VPN方便校外访问图书馆电子资源。</p>
- <h3>奖学金与竞赛</h3>
- <p>矿大设有国家奖学金、国家励志奖学金、校奖学金等。还有"挑战杯"、大创、数学建模等各类竞赛，积极参加对综合素质和保研都有帮助。</p>
- `},
+ <h3>图书馆</h3><p>开馆7:00-22:00，考试周座位紧张。设有自习区、静音区、电子阅览区、研讨间（需预约）。</p>
+ <h3>选课与奖学金</h3><p>大一建议20-24学分。矿大设有国家奖学金、校奖学金以及"挑战杯"、大创等各类竞赛，对保研有帮助。</p>
+ <h3>校园网</h3><p>覆盖教学区和宿舍区，每月有免费流量，学校提供VPN方便校外访问电子资源。</p>`},
    {id:"register",icon:"\u{1F4CB}",title:"报到流程",content:`
- <h3>时间安排</h3>
- <p>新生开学报到通常在<strong>9月初</strong>（具体以录取通知书为准）。宿舍一般提前1-2天开放入住，建议提前到校熟悉环境。</p>
- <h3>必备材料</h3>
- <ul>
-   <li>录取通知书原件</li>
-   <li>身份证及复印件（多备几份）</li>
-   <li>一寸／二寸证件照（红白蓝底各5-8张）</li>
-   <li>高考准考证</li>
-   <li>个人学籍档案（部分省份需自带）</li>
-   <li>团员证及党团组织关系材料</li>
-   <li>户口迁移证（如需迁户口）</li>
- </ul>
- <h3>报到流程</h3>
- <p>到校 → 找到学院迎新点 → 核验身份 → 领取校园卡/宿舍钥匙 → 前往宿舍 → 办理入住</p>
- <div class="highlight">报到当天，学校在徐州站、徐州东站设有迎新点，有学长学姐举牌接站，跟着"中国矿业大学"指示牌走就好。</div>
- `},
+ <h3>时间</h3><p>通常在<strong>9月初</strong>，宿舍提前1-2天开放入住。</p>
+ <h3>必备材料</h3><ul><li>录取通知书原件</li><li>身份证及复印件</li><li>一寸／二寸证件照各5-8张</li><li>高考准考证</li><li>学籍档案（部分省份自带）</li><li>团员证及党团材料</li><li>户口迁移证（如需）</li></ul>
+ <div class="highlight">报到当天在徐州站、徐州东站设有迎新点，有学长学姐举牌接站。</div>`},
    {id:"military",icon:"\u{1F396}",title:"军训须知",content:`
- <h3>军训安排</h3>
- <p>新生入学报到后通常进行<strong>2-3周</strong>的军训。训练内容包括队列训练、军体拳、射击训练（模拟枪）、拉歌、内务整理等。</p>
- <h3>必备物品</h3>
- <ul>
-   <li><strong>防晒霜</strong>：徐州9月阳光强烈，SPF50+必备</li>
-   <li><strong>大水杯</strong>：建议1.5L以上，补水很重要</li>
-   <li><strong>舒适的运动鞋</strong>：军训发的鞋偏硬，可自备软鞋垫</li>
-   <li><strong>应急药品</strong>：创可贴、藿香正气水等</li>
- </ul>
- <h3>军训建议</h3>
- <p>军训虽然辛苦，但也是大学里最特别的经历之一。你会在这段时间快速认识同班同学，建立深厚的友谊。坚持就是胜利！</p>
- `},
+ <h3>安排</h3><p>入学报到后通常进行<strong>2-3周</strong>军训，内容为队列训练、军体拳、射击训练（模拟枪）、拉歌等。</p>
+ <h3>必备物品</h3><ul><li><strong>防晒霜</strong>：SPF50+必备</li><li><strong>大水杯</strong>：1.5L以上</li><li><strong>舒适运动鞋</strong>：可自备软鞋垫</li><li><strong>应急药品</strong>：创可贴、藿香正气水等</li></ul>
+ <p>军训是大学最特别的经历之一，会快速认识同学建立友谊。</p>`},
    {id:"transport",icon:"\u{1F68C}",title:"交通出行",content:`
- <h3>如何到徐州</h3>
- <ul>
-   <li><strong>高铁</strong>：<strong>徐州东站</strong>，打车到南湖约30-40分钟（40-50元），或乘地铁转公交</li>
-   <li><strong>普速</strong>：<strong>徐州站</strong>，打车到南湖约30分钟（约30元），或乘公交直达</li>
-   <li><strong>飞机</strong>：<strong>徐州观音机场</strong>，乘机场大巴到市区再转车</li>
- </ul>
- <h3>校区间通勤</h3>
- <p>南湖 ↔ 文昌有校车免费乘坐，约20-30分钟一班。</p>
- <div class="highlight">建议下载徐州地铁APP。徐州公交支持支付宝扫码乘车。</div>
- `},
+ <h3>到校方式</h3><ul><li><strong>高铁</strong>：徐州东站，打车到南湖30-40分钟</li><li><strong>普速</strong>：徐州站，打车到南湖约30分钟</li><li><strong>飞机</strong>：徐州观音机场，乘机场大巴到市区</li></ul>
+ <h3>校内出行</h3><p>南湖↔文昌有免费校车，20-30分钟一班。校内共享电动车和校园公交（小白车，1元/次）很方便。</p>
+ <div class="highlight">建议下载徐州地铁APP，公交支持支付宝扫码乘车。</div>`},
    {id:"life",icon:"\u{1F3D8}",title:"徐州生活",content:`
- <h3>徐州气候</h3>
- <p>四季分明：夏季炎热可达38°C，备好夏装防晒；冬季干冷最低约-5°C，有暖气供暖，备好羽绒服即可。春秋较短但气候宜人，是校园最美的季节。</p>
- <h3>徐州好去处</h3>
- <ul>
-   <li><strong>云龙湖</strong>：5A级景区，离学校近，散步骑行好去处</li>
-   <li><strong>云龙山</strong>：俯瞰徐州全景</li>
-   <li><strong>户部山</strong>：古建筑群，了解徐州历史文化</li>
-   <li><strong>徐州博物馆</strong>：了解两汉文化必去</li>
- </ul>
- <p>徐州饮食偏咸辣，特色美食有地锅鸡、把子肉、烙馍等。消费水平在江苏省内偏低，周末去南京、济南、郑州坐高铁1-2小时可达。</p>
- `},
+ <h3>气候</h3><p>四季分明：夏季最高38°C需防晒，冬季最低-5°C有暖气。春秋最美。</p>
+ <h3>好去处</h3><ul><li><strong>云龙湖</strong>：5A级景区</li><li><strong>云龙山</strong>：俯瞰徐州</li><li><strong>徐州博物馆</strong>：了解两汉文化</li></ul>
+ <p>特色美食：地锅鸡、把子肉、烙馍。消费水平适中，周末去南京、济南、郑州高铁1-2小时。</p>`},
    {id:"contact",icon:"\u{1F4E7}",title:"联系我们",content:`
- <h3>新生交流群</h3>
- <div class="highlight"><strong>2026级新生官方交流群</strong><br><br>群号：123456789<br><br>进群请备注：年级+专业+姓名<br>群内有学长学姐答疑解惑，第一时间获取入学信息！</div>
- <p>其他联系方式：</p>
- <ul>
-   <li><strong>学校官网</strong>：<a href="https://www.cumt.edu.cn" target="_blank">www.cumt.edu.cn</a></li>
-   <li><strong>招生办公室</strong>：0516-83590111 / 83590123</li>
-   <li><strong>学校地址</strong>：江苏省徐州市铜山区大学路1号（南湖校区）</li>
-   <li><strong>官方公众号</strong>：中国矿业大学（订阅号）、矿大招生</li>
- </ul>
- <div class="content-credit">欧阳深团队 —— VGCNCD 创作<br>为中国矿业大学新生 · 用心打造</div>
- `}
+ <h3>新生交流群</h3><div class="highlight"><strong>2026级新生官方交流群</strong><br><br>群号：123456789<br><br>进群请备注：年级+专业+姓名</div>
+ <p>其他联系方式：</p><ul><li><strong>官网</strong>：<a href="https://www.cumt.edu.cn" target="_blank">www.cumt.edu.cn</a></li><li><strong>招生办</strong>：0516-83590111 / 83590123</li><li><strong>地址</strong>：江苏省徐州市铜山区大学路1号（南湖校区）</li><li><strong>公众号</strong>：中国矿业大学 / 矿大招生</li></ul>
+ <div class="content-credit">欧阳深团队 —— VGCNCD 创作<br>为中国矿业大学新生 · 用心打造</div>`}
  ];
  
- // ===== Invitation Codes =====
- const CODE_SEED = 20260721;
- const TOTAL_CODES = 50000;
- const USED_CODES_KEY = "cumt_used_codes_v3";
- function seededRandom(s){let seed=s;return function(){seed=(seed*1664525+1013904223)&0x7FFFFFFF;return seed/0x7FFFFFFF}}
- function genCode(i){const r=seededRandom(CODE_SEED+i*9973),c="23456789ABCDEFGHJKLMNPQRSTUVWXYZ";let s="CUMT-";for(let j=0;j<6;j++)s+=c[Math.floor(r()*c.length)];return s}
- const CODES=new Set(Array.from({length:TOTAL_CODES},(_,i)=>genCode(i)));
- function getUsedCodes(){try{return new Set(JSON.parse(localStorage.getItem(USED_CODES_KEY)||"[]"))}catch{return new Set()}}
- function markUsed(c){const u=getUsedCodes();u.add(c);localStorage.setItem(USED_CODES_KEY,JSON.stringify([...u]))}
- function isUsed(c){return getUsedCodes().has(c)}
- 
  function showToast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2500)}
- 
- function verifyCode(){
-   const i=document.getElementById("codeInput"),e=document.getElementById("loginError"),b=document.getElementById("loginBtn"),c=i.value.trim().toUpperCase();
-   e.classList.remove("show","success");
-   if(!c){e.textContent="请输入邀请码";e.classList.add("show");return}
-   if(!/^CUMT-[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{6}$/.test(c)){e.textContent="格式：CUMT-XXXXXX（6位大写字母数字）";e.classList.add("show");return}
-   b.disabled=true;b.textContent="验证中...";
-   setTimeout(()=>{
-     if(!CODES.has(c)){e.textContent="邀请码无效";e.classList.add("show");b.disabled=false;b.textContent="进入矿洞";return}
-     if(isUsed(c)){e.textContent="该邀请码已被使用";e.classList.add("show");b.disabled=false;b.textContent="进入矿洞";return}
-     markUsed(c);enterMain();
-   },500);
- }
- 
- function showHowToGet(){const e=document.getElementById("loginError");e.style.color="#059669";e.textContent="加入新生群领取邀请码，群号：123456789";e.classList.add("show")}
  
  function enterMain(){
    document.getElementById("loginScreen").style.display="none";
@@ -312,82 +180,38 @@
    initRadial();
  }
  
- function logout(){
-   ["mainScreen","contentPanel"].forEach(id=>document.getElementById(id).style.display="none");
-   document.getElementById("loginScreen").style.display="flex";
-   document.getElementById("codeInput").value="";
-   document.getElementById("loginBtn").disabled=false;
-   document.getElementById("loginBtn").textContent="进入矿洞";
-   radialDone=false;document.getElementById("radialContainer").innerHTML="";
- }
- 
- function showCredit(){showToast("欧阳深团队 —— VGCNCD 创作 · 为中国矿业大学新生用心打造")}
- 
- // ===== Radial Menu with Spin Animation =====
+ // ===== Radial Spin Animation =====
  let radialDone=false;
  function initRadial(){
    if(radialDone)return;radialDone=true;
    const wrap=document.getElementById("radialContainer"),n=SECTIONS.length;
-   const radius=Math.min(window.innerWidth,window.innerHeight)*0.30,nodeSize=Math.min(76,window.innerWidth*0.12);
- 
-   // Center dot
+   const r=Math.min(window.innerWidth,window.innerHeight)*0.30,s=Math.min(76,window.innerWidth*0.12);
    const ctr=document.createElement("div");ctr.className="radial-center";ctr.textContent="\u{1F50D}";wrap.appendChild(ctr);
- 
-   // Create nodes at center first, then animate outward with spin
    SECTIONS.forEach((sec,i)=>{
-     const a=(i/n)*2*Math.PI-Math.PI/2;
-     const fx=Math.cos(a)*radius,fy=Math.sin(a)*radius;
+     const a=(i/n)*2*Math.PI-Math.PI/2,fx=Math.cos(a)*r,fy=Math.sin(a)*r;
      const nd=document.createElement("div");nd.className="radial-node";
      nd.innerHTML=`<div class="icon">${sec.icon}</div><div class="label">${sec.title}</div>`;
-     nd.style.cssText=`width:${nodeSize}px;height:${nodeSize}px;left:50%;top:50%;transform:translate(-50%,-50%) rotate(0deg) scale(0);opacity:0;transition:all 0s`;
-     nd.onclick=()=>openContent(i);
-     wrap.appendChild(nd);
- 
-     // Staggered animation: expand from center with rotation
-     requestAnimationFrame(()=>{
-       requestAnimationFrame(()=>{
-         const rot=-180+360*(i/n);
-         nd.style.cssText=`width:${nodeSize}px;height:${nodeSize}px;left:50%;top:50%;opacity:1;
-           transform:translate(${-nodeSize/2}px,${-nodeSize/2}px) translate(${fx}px,${fy}px) rotate(${rot}deg);
-           transition:all 0.55s cubic-bezier(.34,1.56,.64,1) ${i*0.06}s`;
-       });
-     });
+     nd.style.cssText=`width:${s}px;height:${s}px;left:50%;top:50%;transform:translate(-50%,-50%) scale(0);transition:all 0s`;
+     nd.onclick=()=>openContent(i);wrap.appendChild(nd);
+     requestAnimationFrame(()=>{requestAnimationFrame(()=>{
+       const rot=-180+360*(i/n);
+       nd.style.cssText=`width:${s}px;height:${s}px;left:50%;top:50%;opacity:1;transform:translate(${-s/2}px,${-s/2}px) translate(${fx}px,${fy}px) rotate(${rot}deg);transition:all 0.55s cubic-bezier(.34,1.56,.64,1) ${i*0.06}s`;
+     })});
    });
- 
-   // After expansion, remove the rotation but keep position
-   setTimeout(()=>{
-     document.querySelectorAll(".radial-node").forEach((nd,i)=>{
-       const a=(i/n)*2*Math.PI-Math.PI/2;
-       const fx=Math.cos(a)*radius,fy=Math.sin(a)*radius;
-       nd.style.transition=`all 0.4s cubic-bezier(.4,0,.2,1) 0s`;
-       nd.style.transform=`translate(${-nodeSize/2}px,${-nodeSize/2}px) translate(${fx}px,${fy}px) rotate(0deg)`;
-     });
-   }, 550+SECTIONS.length*60+200);
+   setTimeout(()=>{document.querySelectorAll(".radial-node").forEach((nd,i)=>{
+     const a=(i/n)*2*Math.PI-Math.PI/2,fx=Math.cos(a)*r,fy=Math.sin(a)*r;
+     nd.style.transition="all 0.4s cubic-bezier(.4,0,.2,1) 0s";
+     nd.style.transform=`translate(${-s/2}px,${-s/2}px) translate(${fx}px,${fy}px) rotate(0deg)`;
+   })}, 550+n*60+200);
  }
  
- // ===== Content =====
  function openContent(i){const s=SECTIONS[i];document.getElementById("contentTitle").textContent=s.icon+"  "+s.title;document.getElementById("contentBody").innerHTML=s.content;document.getElementById("contentPanel").style.display="block";document.getElementById("contentPanel").scrollTop=0}
  function closeContent(){document.getElementById("contentPanel").style.display="none"}
- 
- document.getElementById("codeInput").addEventListener("keydown",function(e){if(e.key==="Enter")verifyCode()});
  
  window.addEventListener("resize",()=>{if(document.getElementById("mainScreen").style.display==="block"){radialDone=false;document.getElementById("radialContainer").innerHTML="";initRadial()}});
  
  // ===== Background particles =====
- (function(){
-   const c=document.createElement("canvas");c.style.cssText="position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.4";
-   document.getElementById("mainScreen").prepend(c);
-   const ctx=c.getContext("2d");let w=c.width=window.innerWidth,h=c.height=window.innerHeight;
-   const pts=Array.from({length:35},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.2,vy:(Math.random()-.5)*.2,r:Math.random()*2+1}));
-   function draw(){
-     ctx.clearRect(0,0,w,h);
-     pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;
-       ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle="rgba(0,64,152,"+(.06+Math.random()*.08)+")";ctx.fill()});
-     requestAnimationFrame(draw);
-   }
-   draw();
-   window.addEventListener("resize",()=>{w=c.width=window.innerWidth;h=c.height=window.innerHeight});
- })();
+ (function(){const c=document.createElement("canvas");c.style.cssText="position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.4";document.getElementById("mainScreen").prepend(c);const ctx=c.getContext("2d");let w=c.width=window.innerWidth,h=c.height=window.innerHeight;const pts=Array.from({length:35},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.2,vy:(Math.random()-.5)*.2,r:Math.random()*2+1}));function draw(){ctx.clearRect(0,0,w,h);pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle="rgba(0,64,152,"+(.06+Math.random()*.08)+")";ctx.fill()});requestAnimationFrame(draw)}draw();window.addEventListener("resize",()=>{w=c.width=window.innerWidth;h=c.height=window.innerHeight})})();
  </script>
  </body>
  </html>
