@@ -1,345 +1,475 @@
  <!DOCTYPE html>
  <html lang="zh-CN">
  <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>中国矿业大学 · 新生入学指南</title>
-     <link rel="stylesheet" href="style.css">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>矿洞 · 中国矿业大学新生指南</title>
+ <style>
+ *{margin:0;padding:0;box-sizing:border-box}
+ body{font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;background:#0a0a1a;color:#e0e0e0;overflow:hidden;height:100vh;width:100vw}
+ :root{--primary:#004098;--accent:#e8a838;--bg:#0a0a1a;--card:#14142a;--text:#e0e0e0;--dim:#8888aa}
+ 
+ /* ===== Login Screen ===== */
+ #loginScreen{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 30%,#1a1a3a,#0a0a1a)}
+ .login-container{width:400px;max-width:90vw;padding:48px 36px;text-align:center}
+ .login-icon{width:80px;height:80px;margin:0 auto 24px;background:linear-gradient(135deg,#004098,#1a5cb5);border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:36px;color:#fff;box-shadow:0 8px 32px rgba(0,64,152,.3)}
+ .login-title{font-size:24px;font-weight:800;color:#fff;margin-bottom:8px;letter-spacing:2px}
+ .login-sub{font-size:13px;color:var(--dim);margin-bottom:32px}
+ .login-input{width:100%;padding:14px 18px;border:2px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(255,255,255,.05);color:#fff;font-size:16px;letter-spacing:4px;text-align:center;outline:none;transition:.3s;font-family:monospace}
+ .login-input:focus{border-color:var(--accent);box-shadow:0 0 20px rgba(232,168,56,.15)}
+ .login-input::placeholder{color:rgba(255,255,255,.2);letter-spacing:1px;font-size:14px}
+ .login-btn{width:100%;margin-top:16px;padding:14px;border:none;border-radius:12px;background:linear-gradient(135deg,#e8a838,#d4942a);color:#0a0a1a;font-size:16px;font-weight:700;cursor:pointer;transition:.3s}
+ .login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,168,56,.3)}
+ .login-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+ .login-error{color:#ff6b6b;font-size:13px;margin-top:12px;min-height:20px;opacity:0;transition:.3s}
+ .login-error.show{opacity:1}
+ .login-getcode{margin-top:28px;font-size:13px;color:var(--dim)}
+ .login-getcode a{color:var(--accent);cursor:pointer;text-decoration:none}
+ .login-getcode a:hover{text-decoration:underline}
+ 
+ /* ===== Radial Menu ===== */
+ #mainScreen{position:fixed;inset:0;display:none;background:radial-gradient(ellipse at 50% 30%,#1a1a3a,#0a0a1a);overflow:hidden}
+ .radial-container{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+ .radial-title{position:fixed;top:28px;left:50%;transform:translateX(-50%);text-align:center;z-index:10}
+ .radial-title h1{font-size:22px;font-weight:800;color:#fff;letter-spacing:3px}
+ .radial-title p{font-size:12px;color:var(--dim);margin-top:4px;letter-spacing:2px}
+ .radial-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#e8a838,#d4942a);display:flex;align-items:center;justify-content:center;font-size:22px;z-index:2;box-shadow:0 0 30px rgba(232,168,56,.2)}
+ .radial-node{position:absolute;width:80px;height:80px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:.4s cubic-bezier(.4,0,.2,1);background:var(--card);border:1px solid rgba(255,255,255,.08);box-shadow:0 4px 20px rgba(0,0,0,.3);z-index:3}
+ .radial-node:hover{transform:translate(-50%,-50%) scale(1.15);border-color:var(--accent);box-shadow:0 0 30px rgba(232,168,56,.15)}
+ .radial-node .icon{font-size:24px;margin-bottom:4px}
+ .radial-node .label{font-size:11px;color:var(--dim);white-space:nowrap;font-weight:500}
+ .radial-node.active{background:linear-gradient(135deg,#1a3a6a,#2a5a9a);border-color:var(--accent)}
+ .radial-node .ring{position:absolute;inset:-3px;border-radius:50%;border:2px solid transparent;transition:.4s}
+ .radial-node:hover .ring{border-color:rgba(232,168,56,.3)}
+ 
+ /* ===== Content Panel ===== */
+ #contentPanel{position:fixed;inset:0;z-index:50;display:none;background:#0f0f25;overflow-y:auto}
+ .content-header{position:sticky;top:0;z-index:10;padding:16px 24px;display:flex;align-items:center;gap:16px;background:rgba(15,15,37,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06)}
+ .content-back{width:40px;height:40px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.3s;flex-shrink:0}
+ .content-back:hover{background:var(--accent);color:#0a0a1a;border-color:var(--accent)}
+ .content-header h2{font-size:18px;font-weight:700;color:#fff}
+ .content-body{padding:32px 24px;max-width:720px;margin:0 auto}
+ .content-body h3{font-size:17px;font-weight:700;color:var(--accent);margin-top:28px;margin-bottom:10px}
+ .content-body h3:first-child{margin-top:0}
+ .content-body p{font-size:15px;line-height:1.9;color:#c8c8d8;margin-bottom:14px}
+ .content-body ul{padding-left:20px;margin-bottom:14px}
+ .content-body ul li{font-size:14.5px;line-height:1.8;color:#c8c8d8;margin-bottom:6px;list-style:none;position:relative;padding-left:16px}
+ .content-body ul li::before{content:'◆';position:absolute;left:-4px;color:var(--accent);font-size:9px;top:4px}
+ .content-body .highlight{background:rgba(232,168,56,.1);border-left:3px solid var(--accent);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0;font-size:14px;color:#d4d4e8}
+ .content-body .highlight strong{color:var(--accent)}
+ 
+ /* ===== Particles ===== */
+ #particles{position:fixed;inset:0;pointer-events:none;z-index:0}
+ .particle{position:absolute;width:2px;height:2px;background:rgba(255,255,255,.3);border-radius:50%}
+ 
+ .logout-btn{position:fixed;bottom:20px;right:20px;z-index:20;padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:var(--dim);font-size:12px;cursor:pointer;transition:.3s}
+ .logout-btn:hover{background:rgba(255,80,80,.15);color:#ff6b6b;border-color:rgba(255,80,80,.3)}
+ 
+ @media(max-width:600px){
+ .radial-node{width:60px;height:60px}
+ .radial-node .icon{font-size:18px}
+ .radial-node .label{font-size:10px}
+ .radial-title h1{font-size:18px}
+ .content-body{padding:20px 16px}
+ }
+ </style>
  </head>
  <body>
  
-     <!-- ========== 导航栏 ========== -->
-     <header class="header" id="header">
-         <div class="container header-inner">
-             <a href="#hero" class="logo">
-                 <span class="logo-icon">&#9874;</span>
-                 <span class="logo-text">CUMT · 新生指南</span>
-             </a>
-             <nav class="nav" id="nav">
-                 <a href="#overview" class="nav-link">学校概况</a>
-                 <a href="#life" class="nav-link">校园生活</a>
-                 <a href="#guide" class="nav-link">新生指南</a>
-                 <a href="#transport" class="nav-link">交通出行</a>
-                 <a href="#contact" class="nav-link">联系我们</a>
-             </nav>
-             <button class="menu-toggle" id="menuToggle" aria-label="菜单">
-                 <span></span><span></span><span></span>
-             </button>
-         </div>
-     </header>
+ <!-- Login Screen -->
+ <div id="loginScreen">
+   <div class="login-container">
+     <div class="login-icon">&#9874;</div>
+     <div class="login-title">矿洞 · 新生指南</div>
+     <div class="login-sub">中国矿业大学 · 2026级</div>
+     <input class="login-input" id="codeInput" type="text" placeholder="输入邀请码" maxlength="11" autocomplete="off" spellcheck="false">
+     <button class="login-btn" id="loginBtn" onclick="verifyCode()">进入矿洞</button>
+     <div class="login-error" id="loginError">邀请码无效，请检查后重试</div>
+     <div class="login-getcode">还没有邀请码？<a href="#contact" onclick="showHowToGet()">加入新生群领取 →</a></div>
+   </div>
+ </div>
  
-     <!-- ========== 英雄区 ========== -->
-     <section class="hero" id="hero">
-         <div class="hero-overlay"></div>
-         <div class="container hero-content">
-             <div class="hero-badge">211工程 · 双一流建设高校</div>
-             <h1 class="hero-title">中国矿业大学</h1>
-             <p class="hero-subtitle">China University of Mining and Technology</p>
-             <p class="hero-desc">始于1909 · 坐落江苏徐州 · 百年学府 欢迎你</p>
-             <div class="hero-actions">
-                 <a href="#contact" class="btn btn-primary btn-lg">
-                     <i class="fa-brands fa-qq"></i> 加入新生群
-                 </a>
-                 <a href="#overview" class="btn btn-outline btn-lg">
-                     了解更多 <i class="fa-solid fa-arrow-down"></i>
-                 </a>
-             </div>
-         </div>
-         <div class="hero-wave">
-             <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
-                 <path d="M0,40 C360,80 720,0 1440,40 L1440,80 L0,80 Z" fill="#f8f9fa"/>
-             </svg>
-         </div>
-     </section>
+ <!-- Main Screen -->
+ <div id="mainScreen">
+   <div class="radial-title">
+     <h1>&#9874; 矿洞</h1>
+     <p>中国矿业大学新生指南 · 选择一块矿石探查</p>
+   </div>
+   <canvas id="particles"></canvas>
+   <div class="radial-container" id="radialContainer"></div>
+   <button class="logout-btn" onclick="logout()">退出登录</button>
+ </div>
  
-     <!-- ========== 学校概况 ========== -->
-     <section class="section" id="overview">
-         <div class="container">
-             <div class="section-header">
-                 <span class="section-tag">About</span>
-                 <h2 class="section-title">学校概况</h2>
-                 <p class="section-desc">百年矿大，薪火相传</p>
-             </div>
-             <div class="overview-grid">
-                 <div class="overview-card">
-                     <div class="overview-icon">
-                         <i class="fa-solid fa-landmark"></i>
-                     </div>
-                     <h3>百年校史</h3>
-                     <p>中国矿业大学始建于1909年，前身为焦作路矿学堂，是近代中国创办最早、延续至今的矿业高等学府之一。百年来，学校历经十四次搬迁、十二次易名，始终薪火相传，被誉为"煤炭行业的人才摇篮"。</p>
-                 </div>
-                 <div class="overview-card">
-                     <div class="overview-icon">
-                         <i class="fa-solid fa-graduation-cap"></i>
-                     </div>
-                     <h3>办学层次</h3>
-                     <p>教育部直属全国重点大学，国家"211工程"和"985工程优势学科创新平台"建设高校，2017年入选国家"双一流"建设高校。以工科为主，理工文管法经等多学科协调发展。</p>
-                 </div>
-                 <div class="overview-card">
-                     <div class="overview-icon">
-                         <i class="fa-solid fa-quote-left"></i>
-                     </div>
-                     <h3>校训精神</h3>
-                     <p class="motto">崇德 · 尚学 · 求是 · 创新</p>
-                     <p>这四个词凝聚了矿大人的精神追求：崇尚道德、重视学问、追求真理、勇于创新。</p>
-                 </div>
-                 <div class="overview-card">
-                     <div class="overview-icon">
-                         <i class="fa-solid fa-location-dot"></i>
-                     </div>
-                     <h3>双校区格局</h3>
-                     <p><strong>南湖校区</strong>（主校区）：位于徐州铜山区，占地约2800亩，现代化校园，大部分本科生、研究生在此就读。<br><br>
-                     <strong>文昌校区</strong>（老校区）：位于徐州泉山区，是矿大精神发源地，环境清幽。</p>
-                 </div>
-             </div>
-         </div>
-     </section>
+ <!-- Content Panel -->
+ <div id="contentPanel">
+   <div class="content-header">
+     <button class="content-back" onclick="closeContent()">&#8592;</button>
+     <h2 id="contentTitle"></h2>
+   </div>
+   <div class="content-body" id="contentBody"></div>
+ </div>
  
-     <!-- ========== 校园生活 ========== -->
-     <section class="section section-alt" id="life">
-         <div class="container">
-             <div class="section-header">
-                 <span class="section-tag">Life</span>
-                 <h2 class="section-title">校园生活</h2>
-                 <p class="section-desc">在矿大，每一天都值得期待</p>
-             </div>
-             <div class="life-grid">
-                 <div class="life-card">
-                     <div class="life-card-icon">
-                         <i class="fa-solid fa-bed"></i>
-                     </div>
-                     <h3>宿舍条件</h3>
-                     <p>南湖校区主要为<strong>4人间</strong>，<strong>上床下桌</strong>，配备空调、暖气和独立卫浴。宿舍楼内有公共洗衣房、开水房，部分楼栋配有电梯。校园网全覆盖，生活便利舒适。</p>
-                 </div>
-                 <div class="life-card">
-                     <div class="life-card-icon">
-                         <i class="fa-solid fa-utensils"></i>
-                     </div>
-                     <h3>食堂美食</h3>
-                     <p>南湖校区有<strong>一食堂</strong>、<strong>二食堂</strong>、<strong>三食堂（音乐餐厅）</strong>等多个食堂，各地风味应有尽有。推荐：一食堂的牛肉面、二食堂的自选餐、三食堂的麻辣香锅，物美价廉！</p>
-                 </div>
-                 <div class="life-card">
-                     <div class="life-card-icon">
-                         <i class="fa-solid fa-book-open"></i>
-                     </div>
-                     <h3>图书馆</h3>
-                     <p>南湖图书馆是学校的<strong>标志性建筑</strong>，造型现代、气势恢宏。馆藏丰富，设有自习区、电子阅览区、研讨间等，是自习和阅读的好去处。文昌校区也有老图书馆，氛围古朴。</p>
-                 </div>
-                 <div class="life-card">
-                     <div class="life-card-icon">
-                         <i class="fa-solid fa-credit-card"></i>
-                     </div>
-                     <h3>校园一卡通</h3>
-                     <p>一张校园卡走遍全校：食堂就餐、超市购物、图书馆借阅、宿舍门禁、浴室计费、校车乘坐全部通用。支持微信/支付宝在线充值，非常方便。</p>
-                 </div>
-                 <div class="life-card">
-                     <div class="life-card-icon">
-                         <i class="fa-solid fa-dumbbell"></i>
-                     </div>
-                     <h3>运动休闲</h3>
-                     <p>南湖校区有<strong>体育馆</strong>（含游泳馆）、标准运动场、篮球场、网球场、排球场等。校园内还有镜湖、不显山等景观，散步跑步都很惬意。</p>
-                 </div>
-                 <div class="life-card">
-                     <div class="life-card-icon">
-                         <i class="fa-solid fa-wifi"></i>
-                     </div>
-                     <h3>校园网络</h3>
-                     <p>校园网覆盖教学楼、宿舍区、图书馆，办理校园网套餐即可使用。学校提供VPN服务，方便在校外访问图书馆电子资源。每个月有一定免费流量，超出需充值。</p>
-                 </div>
-             </div>
-         </div>
-     </section>
+ <script>
+ // ===== Content Data =====
+ const SECTIONS = [
+   {id:"history",icon:"\u{1F3DB}",title:"百年矿大",content:`
+ <h3>百年校史</h3>
+ <p>中国矿业大学始建于1909年，前身为焦作路矿学堂，是近代中国创办最早、延续至今的矿业高等学府之一。学校历经十四次搬迁、十二次易名，始终薪火相传，被誉为"煤炭行业的人才摇篮"。</p>
+ <h3>办学层次</h3>
+ <p>教育部直属全国重点大学，国家"211工程"和"985工程优势学科创新平台"建设高校，2017年入选国家"双一流"建设高校。以工科为主，理工文管法经等多学科协调发展，在矿业工程、安全科学与工程等领域处于国内顶尖水平。</p>
+ <h3>校训精神</h3>
+ <div class="highlight"><strong>崇德 · 尚学 · 求是 · 创新</strong><br>这四个词凝聚了矿大人的精神追求：崇尚道德、重视学问、追求真理、勇于创新。</div>
+ <h3>校区格局</h3>
+ <p><strong>南湖校区</strong>（主校区）：位于徐州铜山区大学路1号，占地约2800亩，是现代化园林式校园。大部分本科生、研究生在此就读。<br><br><strong>文昌校区</strong>（老校区）：位于徐州泉山区，是矿大的发源地，环境清幽，承载着百年矿大的历史记忆。</p>
+ <h3>学校特色</h3>
+ <p>矿大拥有多个国家重点实验室和国家工程研究中心，如深部岩土力学与地下工程国家重点实验室、煤炭资源与安全开采国家重点实验室等。学校与美国、英国、德国等数十个国家的知名高校建立了合作关系，为学生提供了广阔的国际交流平台。</p>
+ `},
+   {id:"campus",icon:"\u{1F3E0}",title:"校园概况",content:`
+ <h3>南湖校区</h3>
+ <p>南湖校区坐落在徐州南郊的云龙湖畔，校园环境优美，绿化覆盖率高。标志性建筑包括南湖图书馆（造型现代，是学校的文化地标）、行政楼、各学院楼群等。校园内有镜湖、不显山等自然景观，四季景色各异。</p>
+ <h3>主要建筑</h3>
+ <ul>
+   <li><strong>南湖图书馆</strong>：建筑面积约6万平方米，藏书丰富，设有自习区、电子阅览区、学术报告厅等</li>
+   <li><strong>博学楼 / 博雅楼</strong>：主要教学楼，大部分课程在此进行</li>
+   <li><strong>体育馆</strong>：含游泳馆、篮球馆、羽毛球馆等</li>
+   <li><strong>大学生活动中心</strong>：社团活动、文艺演出的主要场所</li>
+ </ul>
+ <h3>校园亮点</h3>
+ <p>矿大校园是徐州最美的校园之一，春天樱花烂漫、夏天镜湖荷花、秋天银杏金黄、冬天雪景如画。校园内还养有黑天鹅、锦鲤等小动物，为校园增添生机。<br><br>校内交通便利，有共享电动车和校园公交，还有校际班车往来南湖和文昌校区。</p>
+ `},
+   {id:"dorm",icon:"\u{1F6CF}",title:"宿舍指南",content:`
+ <h3>宿舍条件</h3>
+ <p>南湖校区的本科生宿舍主要为<strong>4人间</strong>，标配<strong>上床下桌</strong>，配备空调和暖气（徐州冬季必备！）。大部分宿舍楼有独立卫浴，部分楼栋设有公共卫浴。每栋宿舍楼都配备热水房和公共洗衣房。</p>
+ <h3>住宿须知</h3>
+ <ul>
+   <li>床铺尺寸：约 2.0m × 0.9m，建议自备或到校购买床品</li>
+   <li>宿舍楼有门禁系统，凭校园卡进出，晚上按时关门</li>
+   <li>宿舍内禁止使用大功率电器（电热毯、电饭煲等）</li>
+   <li>校园网接入每个床位，需办理校园网套餐</li>
+   <li>部分新建宿舍楼配备电梯，老宿舍楼为步梯</li>
+ </ul>
+ <h3>宿舍神器推荐</h3>
+ <p>床边挂篮、台灯/酷毙灯、插排（带USB口）、收纳盒、遮光床帘、耳塞眼罩（保证睡眠质量）</p>
+ <div class="highlight">小贴士：报到当天可以先到宿舍放行李再去办其他手续，建议携带有轮子的行李箱。</div>
+ `},
+   {id:"food",icon:"\u{1F372}",title:"食堂美食",content:`
+ <h3>食堂一览</h3>
+ <p>南湖校区有多个食堂，各具特色，且价格实惠，月均伙食费约800-1200元。</p>
+ <ul>
+   <li><strong>一食堂</strong>：靠近教学区，早餐丰富，牛肉面、煎饼果子不容错过</li>
+   <li><strong>二食堂</strong>：品种最多，自选餐窗口性价比极高，推荐重庆小面、黄焖鸡</li>
+   <li><strong>三食堂（音乐餐厅）</strong>：装修最时尚，可边听音乐边吃饭，麻辣香锅、石锅饭是招牌</li>
+   <li><strong>教职工餐厅</strong>：晚餐和周末对学生开放，环境安静</li>
+ </ul>
+ <h3>周边美食</h3>
+ <p>学校南门外的<span style="font-family:serif">"堕落街"</span>是小吃的天堂：烧烤、麻辣烫、炸鸡、奶茶应有尽有。学校周边还有铜山万达广场和多家商场，周末聚餐好去处。</p>
+ <div class="highlight">强烈推荐：三食堂的麻辣香锅、一食堂的牛肉板面、二食堂一楼的自选早餐！</div>
+ `},
+   {id:"study",icon:"\u{1F4DA}",title:"学习攻略",content:`
+ <h3>图书馆使用指南</h3>
+ <p>南湖图书馆是自习和借书的好去处。开馆时间通常为7:00-22:00。馆内设有：普通自习区、静音自习区、电子阅览区、研讨间（需预约）。考试周期间座位紧张，建议早起占位。</p>
+ <h3>选课须知</h3>
+ <p>每学期分为通识选修课和专业必修/选修课。选课通过教务系统进行，热门课程需要拼手速。建议：<br>1. 提前了解培养方案，做好四年规划<br>2. 咨询学长学姐推荐课程和老师<br>3. 合理搭配，不要贪多，大一建议20-24学分</p>
+ <h3>校园网与信息化</h3>
+ <p>校园网办理后可覆盖教学区和宿舍区。每月有免费流量额度，超出需充值。学校提供VPN方便校外访问图书馆电子资源。建议办理校园网套餐时结合手机流量合理选择。</p>
+ <h3>奖学金与竞赛</h3>
+ <p>矿大设有国家奖学金、国家励志奖学金、校奖学金等。此外还有"挑战杯"、大创（大学生创新创业训练计划）、数学建模等各类竞赛。积极参加对综合素质和保研都有帮助。</p>
+ `},
+   {id:"register",icon:"\u{1F4CB}",title:"报到流程",content:`
+ <h3>时间安排</h3>
+ <p>新生开学报到通常在<strong>9月初</strong>（具体日期以录取通知书为准）。提前1-2天到校可以熟悉环境，但宿舍一般提前1-2天开放入住。</p>
+ <h3>必备材料</h3>
+ <ul>
+   <li>录取通知书原件</li>
+   <li>身份证及复印件（多备几份）</li>
+   <li>一寸／二寸证件照（红白蓝底各准备5-8张）</li>
+   <li>高考准考证</li>
+   <li>个人学籍档案（部分省份需要自带）</li>
+   <li>团员证及党团组织关系材料</li>
+   <li>户口迁移证（如需要迁户口）</li>
+ </ul>
+ <h3>报到流程</h3>
+ <p>通常为：到校 → 找到学院迎新点 → 核验身份 → 领取校园卡/宿舍钥匙 → 前往宿舍 → 办理入住</p>
+ <div class="highlight">报到当天，学校会在徐州站、徐州东站设立迎新点，有学长学姐举牌接站，跟着"中国矿业大学"的指示牌走就好。</div>
+ <h3>开学后安排</h3>
+ <p>入学后会有一周左右的新生入学教育，包括：校史馆参观、安全讲座、体检、新生班会、开学典礼等。之后便是新生军训。</p>
+ `},
+   {id:"military",icon:"\u{1F396}",title:"军训须知",content:`
+ <h3>军训安排</h3>
+ <p>新生入学报到后通常进行<strong>2-3周</strong>的军训。训练内容主要包括队列训练、军体拳、射击训练（模拟枪）、拉歌、内务整理等。训练场主要在校园内的操场和主干道。</p>
+ <h3>必备物品</h3>
+ <ul>
+   <li><strong>防晒霜</strong>：徐州9月阳光依然强烈，SPF50+是必备</li>
+   <li><strong>大水杯</strong>：建议1.5L以上，训练时补水很重要</li>
+   <li><strong>舒适的运动鞋</strong>：军训发的鞋偏硬，可自备软鞋垫</li>
+   <li><strong>创可贴、藿香正气水</strong>等应急药品</li>
+   <li><strong>纸巾/湿巾</strong>：擦汗很方便</li>
+ </ul>
+ <h3>军训建议</h3>
+ <p>军训虽然辛苦，但也是大学里最特别的经历之一。你会在这段时间快速认识同班同学，建立深厚的"战友"情谊。教官通常都很负责，也会在休息时间和大家聊天唱歌。加油坚持，21天很快就过去了！</p>
+ `},
+   {id:"transport",icon:"\u{1F68C}",title:"交通出行",content:`
+ <h3>如何到徐州</h3>
+ <ul>
+   <li><strong>高铁</strong>：大多数新生坐到<strong>徐州东站</strong>，出站后可打车到南湖校区（约30-40分钟，费用40-50元），或乘地铁1号线到市区转公交</li>
+   <li><strong>普速列车</strong>：到<strong>徐州站</strong>，打车到南湖约30分钟（约30元），或乘公交直达</li>
+   <li><strong>飞机</strong>：飞至<strong>徐州观音国际机场</strong>，乘坐机场大巴到市区（约1小时）再转车到校</li>
+ </ul>
+ <h3>校区间通勤</h3>
+ <p>南湖校区 ↔ 文昌校区有校车免费乘坐，约20-30分钟一班，也可乘坐公交或打车。</p>
+ <h3>校内出行</h3>
+ <p>校园内有共享电动车和共享单车，扫码即用。另外还有校园公交（小白车），招手即停，1元/次，覆盖校园主要区域。</p>
+ <div class="highlight">建议手机安装徐州地铁APP，并使用高德/百度地图导航。徐州公交支持支付宝扫码乘车。</div>
+ `},
+   {id:"life",icon:"\u{1F3D8}",title:"徐州生活",content:`
+ <h3>徐州气候</h3>
+ <p>徐州四季分明：<br>夏季（6-8月）炎热，最高可达38℃，需备夏装和防晒用品<br>冬季（12-2月）干冷，最低约-5℃，但有暖气供应，备好羽绒服即可<br>春秋较短但气候宜人，是校园最美的季节</p>
+ <h3>徐州好去处</h3>
+ <ul>
+   <li><strong>云龙湖</strong>：5A级景区，离学校近，散步骑行都很好</li>
+   <li><strong>云龙山</strong>：俯瞰徐州全景的好地方</li>
+   <li><strong>户部山</strong>：古建筑群，了解徐州历史文化</li>
+   <li><strong>回龙窝</strong>：历史文化街区，适合周末闲逛</li>
+   <li><strong>徐州博物馆</strong>：了解两汉文化必去</li>
+ </ul>
+ <h3>生活贴士</h3>
+ <p>徐州的饮食偏咸辣，特色美食有地锅鸡、把子肉、烙馍等，值得一试。生活消费水平在江苏省内偏低，非常适合学生党。周末去周边城市（南京、济南、郑州等地）都很方便，坐高铁1-2小时可达。</p>
+ `},
+   {id:"contact",icon:"\u{1F4E7}",title:"联系我们",content:`
+ <h3>新生交流群</h3>
+ <div class="highlight"><strong>2026级新生官方交流群</strong><br><br>群号：123456789<br><br>进群请备注：年级+专业+姓名<br>群内有学长学姐答疑解惑，第一时间获取入学信息！</div>
+ <p>你也可以通过以下方式联系学校：</p>
+ <ul>
+   <li><strong>学校官网</strong>：<a href="https://www.cumt.edu.cn" style="color:#e8a838" target="_blank">www.cumt.edu.cn</a></li>
+   <li><strong>招生办公室</strong>：0516-83590111 / 83590123</li>
+   <li><strong>学校地址</strong>：江苏省徐州市铜山区大学路1号（南湖校区）</li>
+   <li><strong>官方公众号</strong>：中国矿业大学（订阅号）、矿大招生</li>
+ </ul>
+ <p style="margin-top:20px;color:var(--dim);font-size:13px">本指南由中国矿业大学学长学姐维护，仅供参考，以学校官方通知为准。</p>
+ `}
+ ];
  
-     <!-- ========== 新生指南 ========== -->
-     <section class="section" id="guide">
-         <div class="container">
-             <div class="section-header">
-                 <span class="section-tag">Guide</span>
-                 <h2 class="section-title">新生指南</h2>
-                 <p class="section-desc">帮你顺利开启大学生活</p>
-             </div>
-             <div class="guide-timeline">
-                 <div class="guide-item">
-                     <div class="guide-number">01</div>
-                     <div class="guide-content">
-                         <h3>报到时间与地点</h3>
-                         <p>通常安排在<strong>9月初</strong>（具体以录取通知书为准）。报到地点为<strong>南湖校区</strong>，届时会有学长学姐志愿者在各车站接站，举着"中国矿业大学"的牌子很好辨认。</p>
-                     </div>
-                 </div>
-                 <div class="guide-item">
-                     <div class="guide-number">02</div>
-                     <div class="guide-content">
-                         <h3>报到必备材料</h3>
-                         <p>① 录取通知书原件 ② 身份证及复印件 ③ 一寸/二寸证件照若干（白底/蓝底都准备一些） ④ 高考准考证 ⑤ 个人学籍档案（部分省份需要自带） ⑥ 团员证及党团组织关系材料 ⑦ 户口迁移证（如需迁户口）</p>
-                     </div>
-                 </div>
-                 <div class="guide-item">
-                     <div class="guide-number">03</div>
-                     <div class="guide-content">
-                         <h3>必备物品清单</h3>
-                         <p><strong>生活用品：</strong>被褥床品（可自带也可到校购买）、洗漱用品、衣架、插座、台灯、锁（用于衣柜）、收纳箱<br>
-                         <strong>学习用品：</strong>笔记本电脑、U盘、文具、计算器<br>
-                         <strong>其他：</strong>常用药品（感冒药、肠胃药、创可贴）、防晒霜（军训必备）、少量现金</p>
-                     </div>
-                 </div>
-                 <div class="guide-item">
-                     <div class="guide-number">04</div>
-                     <div class="guide-content">
-                         <h3>军训须知</h3>
-                         <p>新生入学报到后通常进行<strong>2-3周</strong>的军训。建议备好防晒霜、大水杯、舒适的运动鞋。军训是结识同学、融入集体的好机会，虽然辛苦但也是一段难忘的经历。</p>
-                     </div>
-                 </div>
-                 <div class="guide-item">
-                     <div class="guide-number">05</div>
-                     <div class="guide-content">
-                         <h3>徐州气候提醒</h3>
-                         <p>徐州<strong>四季分明</strong>：夏季炎热（7-8月可达38℃），建议备好夏装和防晒用品；冬季干冷（最冷约-5℃），有暖气供应，备好羽绒服即可。春秋两季较短但气候宜人，是校园最美的季节。</p>
-                     </div>
-                 </div>
-                 <div class="guide-item">
-                     <div class="guide-number">06</div>
-                     <div class="guide-content">
-                         <h3>新生建议</h3>
-                         <p>刚入学别急着买太多东西，学校周边超市一应俱全。建议提前加入学院新生群，认识同班同学。开学后会有<strong>新生入学教育</strong>、<strong>开学典礼</strong>、<strong>社团招新</strong>（"百团大战"）等丰富的活动，多参与、多体验。</p>
-                     </div>
-                 </div>
-             </div>
-         </div>
-     </section>
+ // ===== Invitation Code System =====
+ const CODE_SEED = 20260721;
+ const TOTAL_CODES = 50000;
+ const USED_CODES_KEY = "cumt_used_codes";
  
-     <!-- ========== 交通出行 ========== -->
-     <section class="section section-alt" id="transport">
-         <div class="container">
-             <div class="section-header">
-                 <span class="section-tag">Transport</span>
-                 <h2 class="section-title">交通出行</h2>
-                 <p class="section-desc">如何抵达矿大，以及校内出行指南</p>
-             </div>
-             <div class="transport-grid">
-                 <div class="transport-card">
-                     <div class="transport-header">
-                         <i class="fa-solid fa-train-subway"></i>
-                         <h3>高铁 · 徐州东站</h3>
-                     </div>
-                     <p>绝大多数新生会坐到<strong>徐州东站</strong>（高铁站）。出站后可选择：</p>
-                     <ul>
-                         <li>打车至南湖校区约30-40分钟，费用约40-50元</li>
-                         <li>乘坐地铁1号线转公交/打车</li>
-                         <li>报到日有学校大巴接站</li>
-                     </ul>
-                 </div>
-                 <div class="transport-card">
-                     <div class="transport-header">
-                         <i class="fa-solid fa-train"></i>
-                         <h3>普速 · 徐州站</h3>
-                     </div>
-                     <p>如乘坐普速列车到<strong>徐州站</strong>（老火车站）：</p>
-                     <ul>
-                         <li>打车至南湖校区约30分钟，费用约30-40元</li>
-                         <li>可乘坐公交游1路/36路等转车</li>
-                         <li>距文昌校区较近，打车约15分钟</li>
-                     </ul>
-                 </div>
-                 <div class="transport-card">
-                     <div class="transport-header">
-                         <i class="fa-solid fa-plane"></i>
-                         <h3>飞机 · 徐州观音机场</h3>
-                     </div>
-                     <p>外省较远的同学可飞至<strong>徐州观音国际机场</strong>：</p>
-                     <ul>
-                         <li>机场大巴至徐州市区（约1小时）</li>
-                         <li>再到市区转公交或打车至南湖校区</li>
-                         <li>直接打车从机场到学校约40-50分钟</li>
-                     </ul>
-                 </div>
-                 <div class="transport-card">
-                     <div class="transport-header">
-                         <i class="fa-solid fa-bus"></i>
-                         <h3>校区间通勤</h3>
-                     </div>
-                     <p>南湖校区 ↔ 文昌校区往返：</p>
-                     <ul>
-                         <li>校车免费乘坐，约20-30分钟一班</li>
-                         <li>也可乘公交或打车（约20分钟）</li>
-                         <li>共享电动车在校区内很方便</li>
-                     </ul>
-                 </div>
-             </div>
-             <div class="transport-tip">
-                 <i class="fa-solid fa-lightbulb"></i>
-                 <p><strong>小提示：</strong>建议下载徐州地铁APP或使用高德/百度地图导航。徐州公交支持支付宝/微信扫码乘车，非常方便。</p>
-             </div>
-         </div>
-     </section>
+ function seededRandom(seed) {
+   let s = seed;
+   return function() {
+     s = (s * 1664525 + 1013904223) & 0x7FFFFFFF;
+     return s / 0x7FFFFFFF;
+   };
+ }
  
-     <!-- ========== 联系我们 ========== -->
-     <section class="section" id="contact">
-         <div class="container">
-             <div class="section-header">
-                 <span class="section-tag">Contact</span>
-                 <h2 class="section-title">联系我们</h2>
-                 <p class="section-desc">加入新生群，第一时间获取入学信息</p>
-             </div>
-             <div class="contact-qq-card" id="qqCard">
-                 <div class="qq-icon-wrap">
-                     <i class="fa-brands fa-qq"></i>
-                 </div>
-                 <h3>2026级新生官方交流群</h3>
-                 <div class="qq-number-wrap">
-                     <span class="qq-number" id="qqNumber">123456789</span>
-                     <button class="btn btn-copy" id="copyBtn" onclick="copyQQNumber()">
-                         <i class="fa-solid fa-copy"></i> 复制群号
-                     </button>
-                 </div>
-                 <p class="qq-tip">进群请备注 <strong>年级+专业+姓名</strong>，群内由学长学姐答疑解惑</p>
-                 <div class="qq-toast" id="toast">已复制到剪贴板！</div>
-             </div>
-             <div class="contact-extra">
-                 <div class="contact-item">
-                     <i class="fa-solid fa-globe"></i>
-                     <div>
-                         <span class="contact-label">学校官网</span>
-                         <a href="https://www.cumt.edu.cn" target="_blank">www.cumt.edu.cn</a>
-                     </div>
-                 </div>
-                 <div class="contact-item">
-                     <i class="fa-solid fa-phone"></i>
-                     <div>
-                         <span class="contact-label">招生办公室</span>
-                         <span>0516-83590111 / 83590123</span>
-                     </div>
-                 </div>
-                 <div class="contact-item">
-                     <i class="fa-solid fa-location-dot"></i>
-                     <div>
-                         <span class="contact-label">学校地址</span>
-                         <span>江苏省徐州市铜山区大学路1号（南湖校区）</span>
-                     </div>
-                 </div>
-                 <div class="contact-item">
-                     <i class="fa-solid fa-weixin"></i>
-                     <div>
-                         <span class="contact-label">官方公众号</span>
-                         <span>中国矿业大学（订阅号） / 矿大招生</span>
-                     </div>
-                 </div>
-             </div>
-         </div>
-     </section>
+ function generateCode(index) {
+   const rand = seededRandom(CODE_SEED + index * 9973);
+   let code = "CUMT-";
+   const chars = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+   for (let i = 0; i < 6; i++) {
+     code += chars[Math.floor(rand() * chars.length)];
+   }
+   return code;
+ }
  
-     <!-- ========== 页脚 ========== -->
-     <footer class="footer">
-         <div class="container">
-             <div class="footer-inner">
-                 <p class="footer-text">本网站由中国矿业大学学长学姐维护，旨在帮助新生更好地了解学校</p>
-                 <p class="footer-copy">&copy; 2026 中国矿业大学新生指南 · 仅供参考，以官方通知为准</p>
-             </div>
-         </div>
-     </footer>
+ function precomputeCodes() {
+   const codes = new Set();
+   for (let i = 0; i < TOTAL_CODES; i++) {
+     codes.add(generateCode(i));
+   }
+   return codes;
+ }
  
-     <script src="script.js"></script>
+ const VALID_CODES = precomputeCodes();
+ 
+ function getUsedCodes() {
+   try {
+     const data = localStorage.getItem(USED_CODES_KEY);
+     return data ? new Set(JSON.parse(data)) : new Set();
+   } catch { return new Set(); }
+ }
+ 
+ function markCodeUsed(code) {
+   const used = getUsedCodes();
+   used.add(code);
+   try { localStorage.setItem(USED_CODES_KEY, JSON.stringify([...used])); } catch {}
+ }
+ 
+ function isCodeUsed(code) {
+   return getUsedCodes().has(code);
+ }
+ 
+ function verifyCode() {
+   const input = document.getElementById("codeInput");
+   const error = document.getElementById("loginError");
+   const btn = document.getElementById("loginBtn");
+   const code = input.value.trim().toUpperCase();
+   
+   error.classList.remove("show");
+   
+   if (!code) {
+     error.textContent = "请输入邀请码";
+     error.classList.add("show");
+     return;
+   }
+   
+   if (!/^CUMT-[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{6}$/.test(code)) {
+     error.textContent = "邀请码格式不正确，示例：CUMT-XXXXXX";
+     error.classList.add("show");
+     return;
+   }
+   
+   btn.disabled = true;
+   btn.textContent = "验证中...";
+   
+   setTimeout(() => {
+     if (!VALID_CODES.has(code)) {
+       error.textContent = "邀请码无效，请检查后重试";
+       error.classList.add("show");
+       btn.disabled = false;
+       btn.textContent = "进入矿洞";
+       return;
+     }
+     
+     if (isCodeUsed(code)) {
+       error.textContent = "该邀请码已被使用";
+       error.classList.add("show");
+       btn.disabled = false;
+       btn.textContent = "进入矿洞";
+       return;
+     }
+     
+     markCodeUsed(code);
+     enterMainScreen();
+   }, 600);
+ }
+ 
+ function showHowToGet() {
+   const error = document.getElementById("loginError");
+   error.textContent = "加入新生群领取邀请码，群号：123456789";
+   error.style.color = "#e8a838";
+   error.classList.add("show");
+ }
+ 
+ function enterMainScreen() {
+   document.getElementById("loginScreen").style.display = "none";
+   document.getElementById("mainScreen").style.display = "block";
+   initRadialMenu();
+   initParticles();
+ }
+ 
+ function logout() {
+   document.getElementById("mainScreen").style.display = "none";
+   document.getElementById("contentPanel").style.display = "none";
+   document.getElementById("loginScreen").style.display = "flex";
+   document.getElementById("codeInput").value = "";
+   document.getElementById("loginBtn").disabled = false;
+   document.getElementById("loginBtn").textContent = "进入矿洞";
+ }
+ 
+ // ===== Radial Menu =====
+ let radialInitialized = false;
+ 
+ function initRadialMenu() {
+   if (radialInitialized) return;
+   radialInitialized = true;
+   
+   const container = document.getElementById("radialContainer");
+   const count = SECTIONS.length;
+   const radius = Math.min(window.innerWidth, window.innerHeight) * 0.32;
+   const nodeSize = Math.min(80, window.innerWidth * 0.12);
+   
+   // Center logo
+   const center = document.createElement("div");
+   center.className = "radial-center";
+   center.textContent = "\u{1F50D}";
+   container.appendChild(center);
+   
+   // Nodes
+   SECTIONS.forEach((section, i) => {
+     const angle = (i / count) * 2 * Math.PI - Math.PI / 2;
+     const x = Math.cos(angle) * radius;
+     const y = Math.sin(angle) * radius;
+     
+     const node = document.createElement("div");
+     node.className = "radial-node";
+     node.style.width = nodeSize + "px";
+     node.style.height = nodeSize + "px";
+     node.style.transform = `translate(${x - nodeSize/2}px, ${y - nodeSize/2}px)`;
+     node.innerHTML = `<div class="icon">${section.icon}</div><div class="label">${section.title}</div>`;
+     node.onclick = () => openContent(i);
+     node.dataset.index = i;
+     container.appendChild(node);
+   });
+   
+   // Circle guide
+   const guide = document.createElement("div");
+   guide.style.cssText = `position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:${radius*2+20}px;height:${radius*2+20}px;border-radius:50%;border:1px solid rgba(255,255,255,.04);pointer-events:none`;
+   container.appendChild(guide);
+ }
+ 
+ // ===== Content Panel =====
+ function openContent(index) {
+   const section = SECTIONS[index];
+   document.getElementById("contentTitle").textContent = section.icon + " " + section.title;
+   document.getElementById("contentBody").innerHTML = section.content;
+   document.getElementById("contentPanel").style.display = "block";
+   document.getElementById("contentPanel").scrollTop = 0;
+ }
+ 
+ function closeContent() {
+   document.getElementById("contentPanel").style.display = "none";
+ }
+ 
+ // ===== Particles =====
+ function initParticles() {
+   const canvas = document.getElementById("particles");
+   if (!canvas) return;
+   const ctx = canvas.getContext("2d");
+   canvas.width = window.innerWidth;
+   canvas.height = window.innerHeight;
+   
+   const particles = Array.from({length:80}, () => ({
+     x: Math.random() * canvas.width,
+     y: Math.random() * canvas.height,
+     vx: (Math.random() - 0.5) * 0.3,
+     vy: (Math.random() - 0.5) * 0.3,
+     r: Math.random() * 1.5 + 0.5
+   }));
+   
+   function animate() {
+     ctx.clearRect(0, 0, canvas.width, canvas.height);
+     particles.forEach((p, i) => {
+       p.x += p.vx;
+       p.y += p.vy;
+       if (p.x < 0) p.x = canvas.width;
+       if (p.x > canvas.width) p.x = 0;
+       if (p.y < 0) p.y = canvas.height;
+       if (p.y > canvas.height) p.y = 0;
+       
+       ctx.beginPath();
+       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+       ctx.fillStyle = "rgba(232,168,56," + (0.2 + Math.random() * 0.3) + ")";
+       ctx.fill();
+     });
+     requestAnimationFrame(animate);
+   }
+   animate();
+ }
+ 
+ // ===== Enter key =====
+ document.getElementById("codeInput").addEventListener("keydown", function(e) {
+   if (e.key === "Enter") verifyCode();
+ });
+ 
+ // ===== Resize handler =====
+ window.addEventListener("resize", () => {
+   if (document.getElementById("mainScreen").style.display === "block") {
+     radialInitialized = false;
+     document.getElementById("radialContainer").innerHTML = "";
+     initRadialMenu();
+   }
+ });
+ </script>
  </body>
  </html>
