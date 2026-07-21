@@ -76,7 +76,27 @@
  .content-header{padding:12px 16px}
  .main-header h1{font-size:15px}
  }
- </style>
+ 
+.search-overlay{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.35);display:none;align-items:flex-start;justify-content:center;padding-top:16vh;backdrop-filter:blur(2px)}
+.search-overlay.show{display:flex;animation:fadeIn .2s ease}
+.search-box{width:500px;max-width:92vw;background:#fff;border-radius:18px;box-shadow:0 16px 48px rgba(0,0,0,.15);overflow:hidden}
+.search-input-wrap{display:flex;align-items:center;padding:16px 20px;border-bottom:1px solid var(--border);gap:10px}
+.search-input-wrap .icon{font-size:17px;flex-shrink:0}
+.search-input-wrap input{flex:1;border:none;outline:none;font-size:15px;font-family:inherit;color:var(--text);background:transparent}
+.search-input-wrap input::placeholder{color:#b0b0c0}
+.search-close{width:30px;height:30px;border-radius:8px;border:none;background:var(--bg);color:var(--dim);font-size:14px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.search-close:hover{background:#e5e7eb}
+.search-results{max-height:320px;overflow-y:auto}
+.search-results .item{display:flex;align-items:center;gap:11px;padding:13px 20px;cursor:pointer;transition:background .12s;border-bottom:1px solid var(--border)}
+.search-results .item:last-child{border-bottom:none}
+.search-results .item:hover{background:var(--primary-light)}
+.search-results .ico{font-size:19px;flex-shrink:0}
+.search-results .info{flex:1;min-width:0}
+.search-results .t{font-size:13.5px;font-weight:600;color:var(--text)}
+.search-results .d{font-size:12px;color:var(--dim);margin-top:1px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.search-empty{padding:28px 20px;text-align:center;color:var(--dim);font-size:13.5px}
+
+</style>
  </head>
  <body>
  
@@ -381,7 +401,7 @@ function showToast(m){const t=document.getElementById("toast");t.textContent=m;t
    if(radialDone)return;radialDone=true;
    const wrap=document.getElementById("radialContainer"),n=SECTIONS.length;
    const r=Math.min(window.innerWidth,window.innerHeight)*0.30,s=Math.min(76,window.innerWidth*0.12);
-   const ctr=document.createElement("div");ctr.className="radial-center";ctr.textContent="\u{1F50D}";wrap.appendChild(ctr);
+   const ctr=document.createElement("div");ctr.className="radial-center searchable";ctr.title="点击搜索";ctr.textContent="\u{1F50D}";ctr.onclick=openSearch;ctr.style.cursor="pointer";wrap.appendChild(ctr);
    SECTIONS.forEach((sec,i)=>{
      const a=(i/n)*2*Math.PI-Math.PI/2,fx=Math.cos(a)*r,fy=Math.sin(a)*r;
      const nd=document.createElement("div");nd.className="radial-node";
@@ -407,5 +427,18 @@ function showToast(m){const t=document.getElementById("toast");t.textContent=m;t
  
  (function(){var c=document.createElement("canvas");c.style.cssText="position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.4";document.getElementById("mainScreen").prepend(c);var ctx=c.getContext("2d"),w=c.width=window.innerWidth,h=c.height=window.innerHeight;var pts=[];for(var i=0;i<35;i++)pts.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.2,vy:(Math.random()-.5)*.2,r:Math.random()*2+1});function draw(){ctx.clearRect(0,0,w,h);pts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle="rgba(0,64,152,"+(.06+Math.random()*.08)+")";ctx.fill()});requestAnimationFrame(draw)}draw();window.addEventListener("resize",function(){w=c.width=window.innerWidth;h=c.height=window.innerHeight})})();
  </script>
- </body>
+ 
+<div class="search-overlay" id="searchOverlay" onclick="closeSearch(event)">
+  <div class="search-box" onclick="event.stopPropagation()">
+    <div class="search-input-wrap">
+      <span class="icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="输入关键词搜索...（如：宿舍、食堂、军训）" oninput="doSearch()" onkeydown="if(event.key==='Escape')closeSearch()">
+      <button class="search-close" onclick="closeSearch()">✕</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-empty">输入关键词开始搜索</div>
+    </div>
+  </div>
+</div>
+</body>
  </html>
